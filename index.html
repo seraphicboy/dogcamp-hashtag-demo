@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>DogCamp Hashtag Monitor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f3f4f6;
+      color: #111827;
+    }
+
+    .app {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      overflow: hidden;         /* 로고가 동그라미 안에 잘리도록 */
+      background: #f3f4f6;      /* 필요하면 색 바꿔도 됨 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;      /* 로고 비율 유지 (꽉 차게는 cover) */
+    }
+
+    .title-block h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .title-block p {
+      margin: 2px 0 0;
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1.7fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 8px 16px rgba(15, 23, 42, 0.08);
+    }
+
+    .card h2 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    .card p.desc {
+      margin: 0 0 12px;
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 11px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      margin-bottom: 8px;
+    }
+
+    .badge span.icon {
+      font-size: 13px;
+    }
+
+    .info-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .info-item {
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #f9fafb;
+      font-size: 12px;
+    }
+
+    .info-label {
+      display: block;
+      font-size: 11px;
+      color: #6b7280;
+      margin-bottom: 2px;
+    }
+
+    .info-value {
+      font-weight: 600;
+    }
+
+    .pill {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: #ecfdf5;
+      color: #15803d;
+      margin-top: 6px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .section-title h3 {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .section-title span {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .post-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 260px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .post-item {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 10px;
+      padding: 8px;
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+
+    .thumb {
+      width: 72px;
+      height: 72px;
+      border-radius: 10px;
+      background-size: cover;
+      background-position: center;
+      background-color: #e5e7eb;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .thumb-label {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(17, 24, 39, 0.8);
+      color: #f9fafb;
+    }
+
+    .post-meta {
+      font-size: 11px;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .post-caption {
+      font-size: 12px;
+      margin-bottom: 4px;
+      max-height: 36px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .post-link {
+      font-size: 11px;
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .post-link:hover {
+      text-decoration: underline;
+    }
+
+    .hashtag-search {
+      margin-top: 8px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .input-row input {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+      font-size: 13px;
+    }
+
+    .input-row button {
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: none;
+      background: #2563eb;
+      color: #ffffff;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .input-row button:hover {
+      background: #1d4ed8;
+    }
+
+    .hint {
+      font-size: 11px;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .tag-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: #fef9c3;
+      color: #854d0e;
+      margin-right: 4px;
+    }
+
+    .empty {
+      font-size: 12px;
+      color: #9ca3af;
+      padding: 8px 0;
+    }
+
+    footer {
+      margin-top: 16px;
+      font-size: 10px;
+      color: #9ca3af;
+      text-align: right;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="logo">
+        <!-- 여기 src를 네 로고 파일 이름으로 바꿔도 됨 -->
+        <img src="dogcamp-logo.png" alt="DogCamp logo" />
+      </div>
+      <div class="title-block">
+        <h1>DogCamp Hashtag Monitor</h1>
+        <p>도그캠프 인스타그램 계정 및 브랜드 해시태그 모니터링 내부 대시보드 (검수용 데모)</p>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- 왼쪽: 우리 비즈니스 계정 정보 + 우리 계정 게시물 -->
+      <section class="card">
+        <div class="badge">
+          <span class="icon">🔐</span>
+          <span>instagram_basic 사용 예시</span>
+        </div>
+        <h2>연결된 인스타그램 비즈니스 계정</h2>
+        <p class="desc">
+          instagram_basic 권한으로 Instagram Graph API의
+          <code>/{ig-user-id}?fields=id,username,media_count</code> 및
+          <code>/{ig-user-id}/media</code> 응답을 사용해
+          우리 비즈니스 계정 정보를 표시하는 영역입니다.
+        </p>
+
+        <div class="info-row" id="account-info">
+          <!-- JS에서 채워넣음 -->
+        </div>
+
+        <div class="section-title" style="margin-top: 14px;">
+          <h3>우리 계정이 올린 최근 게시물</h3>
+          <span>비즈니스 계정 자체 콘텐츠만 조회</span>
+        </div>
+
+        <div class="post-list" id="own-posts"></div>
+      </section>
+
+      <!-- 오른쪽: 해시태그 검색 (다른 유저 게시물) -->
+      <section class="card">
+        <div class="badge">
+          <span class="icon">#️⃣</span>
+          <span>공개 해시태그 게시물 (검수용 데모)</span>
+        </div>
+        <h2>브랜드 해시태그 검색</h2>
+        <p class="desc">
+          Instagram Hashtag Search API
+          (<code>/ig_hashtag_search</code>, <code>/{hashtag-id}/recent_media</code>)를 사용해
+          고객이 자발적으로 남긴 공개 게시물을 시간순으로 모니터링하는 내부용 화면입니다.
+        </p>
+
+        <div class="hashtag-search">
+          <div class="hint">
+            예: <span class="tag-chip">#도그캠프</span>
+            <span class="tag-chip">#도그캠프공항점</span>
+          </div>
+          <div class="input-row">
+            <input id="hashtag-input" type="text" placeholder="#도그캠프" />
+            <button id="search-btn" type="button">검색</button>
+          </div>
+          <div class="hint">
+            ※ 검수용 데모에서는 API 응답을 예시 데이터로 표시합니다.
+            실제 운영 시에는 Instagram Graph API 응답으로 교체됩니다.
+          </div>
+        </div>
+
+        <div class="section-title" style="margin-top: 10px;">
+          <h3>해시태그 검색 결과 (시간순)</h3>
+          <span id="current-tag-label">검색 전</span>
+        </div>
+
+        <div class="post-list" id="hashtag-results">
+          <!-- 검색 결과가 없을 때 기본 문구 -->
+          <div class="empty">위의 입력창에 브랜드 해시태그를 입력하고 “검색” 버튼을 눌러주세요.</div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      이 화면은 Meta App Review를 위한 데모이며, 도그캠프 내부 직원용 대시보드 시나리오를 설명하기 위한 용도입니다.
+    </footer>
+  </div>
+
+  <script>
+    // -----------------------------
+    // 1. instagram_basic 사용 예시: 우리 계정 정보 + 우리가 올린 게시물
+    // -----------------------------
+    const mockAccount = {
+      id: "17841451651429958",
+      username: "dogcamp.gochon",
+      media_count: 752
+    };
+
+    const mockOwnPosts = [
+      {
+        id: "18000000000000001",
+        caption: "오늘 도그캠프 공항점 유치원 친구들 🐶✈️ #도그캠프 #도그캠프공항점",
+        permalink: "https://www.instagram.com/p/DEMOPOST01/",
+        media_type: "IMAGE",
+        media_url: "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=300",
+        timestamp: "2025-11-30T10:23:45+0000"
+      },
+      {
+        id: "18000000000000002",
+        caption: "공항 가기 전에 잠깐 들러서 놀다 가는 날 🐾 #dogcamp",
+        permalink: "https://www.instagram.com/p/DEMOPOST02/",
+        media_type: "IMAGE",
+        media_url: "https://images.pexels.com/photos/3299900/pexels-photo-3299900.jpeg?auto=compress&cs=tinysrgb&w=300",
+        timestamp: "2025-11-28T09:10:20+0000"
+      },
+      {
+        id: "18000000000000003",
+        caption: "신규 친구 적응 중 🙂 오늘도 안전하게 잘 놀았습니다!",
+        permalink: "https://www.instagram.com/p/DEMOPOST03/",
+        media_type: "IMAGE",
+        media_url: "https://images.pexels.com/photos/4587795/pexels-photo-4587795.jpeg?auto=compress&cs=tinysrgb&w=300",
+        timestamp: "2025-11-25T12:01:10+0000"
+      }
+    ];
+
+    function renderAccountInfo() {
+      const container = document.getElementById("account-info");
+      container.innerHTML = `
+        <div class="info-item">
+          <span class="info-label">연결된 계정</span>
+          <span class="info-value">@${mockAccount.username}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">게시물 수</span>
+          <span class="info-value">${mockAccount.media_count.toLocaleString("ko-KR")} 개</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">IG User ID</span>
+          <span class="info-value">${mockAccount.id}</span>
+        </div>
+      `;
+    }
+
+    function renderOwnPosts() {
+      const list = document.getElementById("own-posts");
+      list.innerHTML = "";
+
+      mockOwnPosts.forEach((post) => {
+        const item = document.createElement("div");
+        item.className = "post-item";
+
+        const thumb = document.createElement("div");
+        thumb.className = "thumb";
+        thumb.style.backgroundImage = `url("${post.media_url}")`;
+        thumb.innerHTML = `<div class="thumb-label">우리 계정</div>`;
+
+        const right = document.createElement("div");
+        const meta = document.createElement("div");
+        meta.className = "post-meta";
+        const date = new Date(post.timestamp);
+        meta.textContent = `${date.toLocaleDateString("ko-KR")} · ${post.media_type}`;
+
+        const caption = document.createElement("div");
+        caption.className = "post-caption";
+        caption.textContent = post.caption;
+
+        const link = document.createElement("a");
+        link.className = "post-link";
+        link.href = post.permalink;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "인스타그램에서 보기";
+
+        right.appendChild(meta);
+        right.appendChild(caption);
+        right.appendChild(link);
+
+        item.appendChild(thumb);
+        item.appendChild(right);
+        list.appendChild(item);
+      });
+    }
+
+    // -----------------------------
+    // 2. Hashtag Search 데모: 다른 유저(고객) 공개 게시물 예시
+    // -----------------------------
+    const mockHashtagResults = {
+      "도그캠프": [
+        {
+          id: "19000000000000001",
+          username: "happy_dog_mom",
+          caption: "공항 가기 전에 도그캠프에서 뛰어놀고 왔어요 🐶✈️ #도그캠프 #인천공항",
+          permalink: "https://www.instagram.com/p/HASHTAG01/",
+          media_type: "IMAGE",
+          media_url: "https://images.pexels.com/photos/7210269/pexels-photo-7210269.jpeg?auto=compress&cs=tinysrgb&w=300",
+          timestamp: "2025-11-29T08:15:00+0000"
+        },
+        {
+          id: "19000000000000002",
+          username: "travel_with_puppy",
+          caption: "비행 전 마지막 에너지 발산! 역시 도그캠프 👍 #도그캠프 #도그캠프공항점",
+          permalink: "https://www.instagram.com/p/HASHTAG02/",
+          media_type: "IMAGE",
+          media_url: "https://images.pexels.com/photos/7210282/pexels-photo-7210282.jpeg?auto=compress&cs=tinysrgb&w=300",
+          timestamp: "2025-11-27T14:32:10+0000"
+        }
+      ],
+      "도그캠프공항점": [
+        {
+          id: "19000000000000003",
+          username: "puppy_airport",
+          caption: "공항점 첫 방문! 스태프분들도 친절하고 너무 좋았어요 💛 #도그캠프공항점",
+          permalink: "https://www.instagram.com/p/HASHTAG03/",
+          media_type: "IMAGE",
+          media_url: "https://images.pexels.com/photos/7210535/pexels-photo-7210535.jpeg?auto=compress&cs=tinysrgb&w=300",
+          timestamp: "2025-11-26T11:05:00+0000"
+        }
+      ]
+    };
+
+    function renderHashtagResults(tag) {
+      const list = document.getElementById("hashtag-results");
+      const label = document.getElementById("current-tag-label");
+
+      const normalized = tag.replace(/^#/, "").trim();
+      label.textContent = `#${normalized} 검색 결과`;
+
+      const results = mockHashtagResults[normalized];
+
+      list.innerHTML = "";
+
+      if (!results || results.length === 0) {
+        list.innerHTML = `<div class="empty">현재 예시 데이터에는 #${normalized} 태그가 포함된 게시물이 없습니다.</div>`;
+        return;
+      }
+
+      results.forEach((post) => {
+        const item = document.createElement("div");
+        item.className = "post-item";
+
+        const thumb = document.createElement("div");
+        thumb.className = "thumb";
+        thumb.style.backgroundImage = `url("${post.media_url}")`;
+        thumb.innerHTML = `<div class="thumb-label">고객 게시물</div>`;
+
+        const right = document.createElement("div");
+        const meta = document.createElement("div");
+        meta.className = "post-meta";
+        const date = new Date(post.timestamp);
+        meta.textContent = `${date.toLocaleDateString("ko-KR")} · @${post.username}`;
+
+        const caption = document.createElement("div");
+        caption.className = "post-caption";
+        caption.textContent = post.caption;
+
+        const link = document.createElement("a");
+        link.className = "post-link";
+        link.href = post.permalink;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "인스타그램에서 보기";
+
+        right.appendChild(meta);
+        right.appendChild(caption);
+        right.appendChild(link);
+
+        item.appendChild(thumb);
+        item.appendChild(right);
+        list.appendChild(item);
+      });
+    }
+
+    // -----------------------------
+    // 3. 초기 렌더 + 이벤트 연결
+    // -----------------------------
+    renderAccountInfo();
+    renderOwnPosts();
+
+    document.getElementById("search-btn").addEventListener("click", () => {
+      const input = document.getElementById("hashtag-input");
+      const value = input.value.trim() || "#도그캠프";
+      renderHashtagResults(value);
+    });
+
+    // 페이지 로드 시 기본 해시태그를 미리 보여주고 싶다면:
+    // renderHashtagResults("도그캠프");
+  </script>
+</body>
+</html>
