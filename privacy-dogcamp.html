@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Privacy Policy – DogCamp Instagram Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Open Graph tags for Meta / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Privacy Policy – DogCamp Instagram Dashboard" />
+  <meta property="og:description" content="Privacy Policy for DogCamp Airport Branch internal Instagram dashboard app using instagram_basic for our own Business account." />
+  <meta property="og:url" content="https://seraphicboy.github.io/dogcamp-hashtag-demo/privacy-dogcamp.html" />
+  <!-- 여기 이미지 파일 이름은 실제 업로드한 파일 이름에 맞게 수정 -->
+  <meta property="og:image" content="https://seraphicboy.github.io/dogcamp-hashtag-demo/dogcamp-og-image.png" />
+
+  <!-- Link this page to our Meta App -->
+  <meta property="fb:app_id" content="1668676324517166" />
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      margin: 0;
+      padding: 0;
+    }
+    .wrap {
+      max-width: 840px;
+      margin: 40px auto;
+      padding: 24px 20px 40px;
+      background: #020617;
+      border-radius: 18px;
+      border: 1px solid #1f2937;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.9);
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+    h2 {
+      margin-top: 22px;
+      font-size: 18px;
+    }
+    p, li {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #e5e7eb;
+    }
+    .meta {
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 16px;
+    }
+    a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      background: #020617;
+      padding: 2px 4px;
+      border-radius: 4px;
+      border: 1px solid #1f2937;
+    }
+    ul {
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- 화면에 로고도 보이게 하고 싶으면 아래 주석 해제 후 src만 네 파일로 수정 -->
+    <!--
+    <div style="margin-bottom: 16px;">
+      <img
+        src="https://seraphicboy.github.io/dogcamp-hashtag-demo/dogcamp-og-image.png"
+        alt="DogCamp Airport Branch Logo"
+        style="height: 60px; border-radius: 12px;"
+      />
+    </div>
+    -->
+
+    <h1>Privacy Policy – DogCamp Instagram Dashboard</h1>
+    <div class="meta">
+      Business: DogCamp Airport Branch (“DogCamp”, “we”, “our”)<br />
+      App name: 공항점 인스타분석 (DogCamp Instagram Dashboard)<br />
+      Last updated: 28 December 2025
+    </div>
+
+    <p>
+      This Privacy Policy explains how DogCamp Airport Branch (“DogCamp”, “we”, “us”, or “our”)
+      uses data obtained from Meta platforms through our internal web application,
+      <strong>공항점 인스타분석 (DogCamp Instagram Dashboard)</strong>.
+      This app is an internal tool used only by DogCamp staff to connect and monitor
+      our own Instagram Business account <strong>@dogcamp.gochon</strong>.
+    </p>
+
+    <h2>1. Who we are</h2>
+    <p>
+      DogCamp Airport Branch is a pet hotel and dog kindergarten business in Korea.
+      We operate the Instagram Business account <strong>@dogcamp.gochon</strong> to share
+      updates about our services and to communicate with customers.
+      This dashboard app is owned and operated by DogCamp and is not offered to the general public.
+    </p>
+
+    <h2>2. What data we access from Meta</h2>
+    <p>
+      Through the Meta API, our app requests the following permission:
+      <code>instagram_basic</code>.
+    </p>
+    <p>
+      Using this permission, we only access basic information about our own
+      Instagram Business account, specifically:
+    </p>
+    <ul>
+      <li>Instagram Business Account ID (<code>id</code>)</li>
+      <li>Username (<code>username</code>)</li>
+      <li>Total number of media posts (<code>media_count</code>)</li>
+    </ul>
+
+    <p>
+      Currently, our app calls only this read-only endpoint:
+    </p>
+    <p>
+      <code>/{ig-user-id}?fields=id,username,media_count</code>
+    </p>
+
+    <p>
+      We do <strong>not</strong> post, edit, or delete any content on Instagram via the API.
+      We do <strong>not</strong> read or store direct messages, comments, or private data from
+      other users. We only access basic information for our own Business account that we own and control.
+    </p>
+
+    <h2>3. How we use this data</h2>
+    <p>
+      The data obtained via <code>instagram_basic</code> is used only for the following purposes:
+    </p>
+    <ul>
+      <li>To verify which Instagram Business account is connected to our internal dashboard</li>
+      <li>To display basic account information (ID, username, media count) to our staff</li>
+      <li>To confirm that our connection to the Instagram Graph API is working correctly</li>
+    </ul>
+
+    <p>
+      The app is an internal tool for DogCamp staff and is not accessible to customers
+      or the general public. We do not use this data for advertising networks or for
+      cross-app tracking.
+    </p>
+
+    <h2>4. Data storage and retention</h2>
+    <p>
+      Our current implementation runs as a simple web dashboard.
+      The Instagram Business account data (ID, username, media_count) is:
+    </p>
+    <ul>
+      <li>Requested from Meta APIs when a staff member logs in and opens the dashboard</li>
+      <li>Displayed directly in the browser for that session</li>
+      <li>Not permanently stored in any external database by this app</li>
+    </ul>
+
+    <p>
+      Access tokens used for the connection are handled according to Meta’s platform policies
+      and are not shared with third parties.
+    </p>
+
+    <h2>5. Data sharing and third-party processors</h2>
+    <p>
+      We do <strong>not</strong> sell, rent, or share Meta platform data with any third-party
+      companies or external service providers.
+    </p>
+    <p>
+      Meta platform data accessed through this app is used only by DogCamp staff for internal
+      business purposes and is not provided to other businesses.
+    </p>
+
+    <h2>6. Future hashtag features</h2>
+    <p>
+      In the future, we plan to request <strong>Instagram Public Content Access</strong>
+      in order to display public posts that contain our brand hashtags
+      (for example, <code>#도그캠프공항점</code> or <code>#dogcamp</code>).
+    </p>
+    <p>
+      Those hashtag features will use the Hashtag Search API and the Public Content
+      Access permission. They will <strong>not</strong> rely on the
+      <code>instagram_basic</code> permission.
+    </p>
+    <p>
+      Even for hashtag features, we only intend to view and organize public posts
+      that customers choose to share with our brand hashtags, for the purpose of
+      brand monitoring and customer engagement.
+    </p>
+
+    <h2>7. Children’s privacy</h2>
+    <p>
+      This app is an internal business tool and is not directed to children.
+      It is used only by DogCamp staff members.
+    </p>
+
+    <h2>8. Security</h2>
+    <p>
+      We limit access to this dashboard to authorized DogCamp staff only.
+      We follow Meta’s Platform Policies regarding access tokens and platform data.
+      We do not intentionally collect or store sensitive personal information from
+      customers via this app.
+    </p>
+
+    <h2>9. Contact us</h2>
+    <p>
+      If you have any questions about this Privacy Policy or how we use Meta platform data,
+      you can contact us at:
+    </p>
+    <p>
+      Email: <a href="mailto:seraphicboy.gochon@gmail.com">seraphicboy.gochon@gmail.com</a><br />
+      Instagram: <a href="https://www.instagram.com/dogcamp.gochon/" target="_blank">@dogcamp.gochon</a>
+    </p>
+
+    <h2>10. Changes to this policy</h2>
+    <p>
+      We may update this Privacy Policy from time to time to reflect changes in our
+      internal tools or Meta’s platform requirements. If we make significant changes,
+      we will update the “Last updated” date at the top of this page.
+    </p>
+  </div>
+</body>
+</html>
