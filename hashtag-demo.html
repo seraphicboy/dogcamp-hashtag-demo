@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>DogCamp Hashtag Demo – Instagram Public Content Access</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: dark;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 55%, #000 100%);
+      color: #e5e7eb;
+    }
+    .page {
+      max-width: 960px;
+      margin: 32px auto 48px;
+      padding: 24px 20px 40px;
+      background: #020617;
+      border-radius: 18px;
+      border: 1px solid #1f2937;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.7);
+    }
+    h1 {
+      font-size: 26px;
+      margin: 0 0 6px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: #9ca3af;
+      margin-bottom: 20px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(56,189,248,0.08);
+      border: 1px solid rgba(56,189,248,0.5);
+      color: #7dd3fc;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 18px;
+      margin-top: 24px;
+      margin-bottom: 8px;
+    }
+    .card {
+      border-radius: 14px;
+      border: 1px solid #1f2937;
+      background: rgba(15,23,42,0.9);
+      padding: 16px 16px 18px;
+      margin-top: 8px;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+      color: #e5e7eb;
+    }
+    input, button, textarea {
+      font-family: inherit;
+      font-size: 14px;
+    }
+    input[type="text"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      background: #020617;
+      color: #e5e7eb;
+      outline: none;
+    }
+    input::placeholder {
+      color: #6b7280;
+    }
+    textarea {
+      min-height: 60px;
+      resize: vertical;
+    }
+    .row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .row > .col {
+      flex: 1 1 0;
+      min-width: 180px;
+    }
+    button {
+      margin-top: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    button.secondary {
+      background: transparent;
+      border: 1px solid #4b5563;
+      color: #e5e7eb;
+      font-weight: 500;
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: default;
+    }
+    .hint {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+    .status {
+      font-size: 13px;
+      margin-top: 6px;
+      color: #22c55e;
+    }
+    .status.error {
+      color: #f97373;
+    }
+    .results {
+      margin-top: 12px;
+      max-height: 420px;
+      overflow: auto;
+      border-radius: 12px;
+      border: 1px solid #1f2937;
+      background: #020617;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    thead {
+      position: sticky;
+      top: 0;
+      background: #020617;
+      z-index: 1;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid #111827;
+      vertical-align: top;
+    }
+    th {
+      font-weight: 600;
+      color: #9ca3af;
+      font-size: 12px;
+    }
+    tr:hover td {
+      background: rgba(15,23,42,0.9);
+    }
+    .caption-cell {
+      max-width: 260px;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: 1px solid #4b5563;
+      color: #9ca3af;
+    }
+    .footer-note {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+    .footer-note strong {
+      color: #e5e7eb;
+    }
+    a {
+      color: #38bdf8;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      background: #020617;
+      padding: 2px 4px;
+      border-radius: 4px;
+      border: 1px solid #1f2937;
+    }
+    .api-preview {
+      font-size: 12px;
+      margin-top: 6px;
+      color: #9ca3af;
+    }
+    .api-preview span {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="badge">
+      DogCamp Airport Branch · Internal Tool
+    </div>
+    <h1>DogCamp Hashtag Demo</h1>
+    <div class="subtitle">
+      Internal Instagram dashboard used only by DogCamp staff to connect our own Business account
+      <strong>@dogcamp.gochon</strong> and view event hashtag posts (e.g. <code>#2025트리샷이벤트</code>).
+      Not for resale, ads, or external analytics.
+    </div>
+
+    <!-- STEP 1: Access token + IG user id -->
+    <h2 class="section-title">Step 1 – Connect our own Instagram Business account</h2>
+    <div class="card">
+      <div class="row">
+        <div class="col">
+          <label for="accessToken">System user access token</label>
+          <input
+            id="accessToken"
+            type="password"
+            placeholder="Paste system user token from Meta Business here"
+          />
+          <div class="hint">
+            Used only in this demo to call the Instagram Graph API for our own Business account.
+          </div>
+        </div>
+        <div class="col">
+          <label for="igUserId">Instagram Business Account ID (ig_user_id)</label>
+          <input
+            id="igUserId"
+            type="text"
+            placeholder="e.g. 17841451651429958"
+            value="17841451651429958"
+          />
+          <div class="hint">
+            This is the ig_user_id for our Business account @dogcamp.gochon.
+          </div>
+        </div>
+      </div>
+
+      <button id="btnLoadProfile" onclick="loadProfile()">
+        1. Load my Instagram Business info
+      </button>
+      <div id="profileStatus" class="status"></div>
+
+      <div id="profileCard" class="results" style="display:none; margin-top:10px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody id="profileTableBody">
+          </tbody>
+        </table>
+      </div>
+
+      <div class="api-preview">
+        This button calls:<br />
+        <span>/&lt;ig_user_id&gt;?fields=id,username,media_count</span>
+      </div>
+    </div>
+
+    <!-- STEP 2: Hashtag search -->
+    <h2 class="section-title">Step 2 – Search our event hashtag posts (public content)</h2>
+    <div class="card">
+      <div class="row">
+        <div class="col">
+          <label for="hashtagInput">Event or brand hashtag (without #)</label>
+          <input
+            id="hashtagInput"
+            type="text"
+            placeholder="e.g. 2025트리샷이벤트"
+            value="2025트리샷이벤트"
+          />
+          <div class="hint">
+            We use our own event hashtags such as 2023트리샷이벤트, 2024트리샷이벤트, 2025트리샷이벤트.
+          </div>
+        </div>
+      </div>
+
+      <button id="btnSearchHashtag" onclick="searchHashtag()">
+        2. Search hashtag posts (recent_public_media)
+      </button>
+      <div id="hashtagStatus" class="status"></div>
+
+      <div class="api-preview">
+        This demo will call, in order:<br />
+        <span>/ig_hashtag_search?user_id=&lt;ig_user_id&gt;&amp;q=&lt;hashtag&gt;</span><br />
+        <span>/&lt;hashtag-id&gt;/recent_media?user_id=&lt;ig_user_id&gt;&amp;fields=id,caption,media_type,media_url,permalink,timestamp</span>
+      </div>
+
+      <div id="resultsContainer" class="results" style="display:none; margin-top:10px;">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Caption (snippet)</th>
+              <th>Link</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody id="resultsTableBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- FOOTER: Policy explanation for reviewers -->
+    <div class="footer-note">
+      <strong>How we use this data:</strong><br />
+      This page is only used internally by DogCamp Airport Branch staff to:
+      view public posts that contain our own brand/event hashtags (for example
+      <code>#2025트리샷이벤트</code>) and to confirm participation in our in-store events.
+      We may re-share some of these posts to our Instagram Stories on
+      <a href="https://www.instagram.com/dogcamp.gochon/" target="_blank">@dogcamp.gochon</a>
+      with proper credit to the customer.
+      We do not sell or share this data with third parties, and we do not use it
+      for ad targeting or external marketing datasets.
+    </div>
+  </div>
+
+  <script>
+    async function loadProfile() {
+      const token = document.getElementById('accessToken').value.trim();
+      const igUserId = document.getElementById('igUserId').value.trim();
+      const statusEl = document.getElementById('profileStatus');
+      const tableBody = document.getElementById('profileTableBody');
+      const card = document.getElementById('profileCard');
+
+      statusEl.textContent = '';
+      statusEl.className = 'status';
+      tableBody.innerHTML = '';
+      card.style.display = 'none';
+
+      if (!token || !igUserId) {
+        statusEl.textContent = 'Please enter both access token and ig_user_id.';
+        statusEl.className = 'status error';
+        return;
+      }
+
+      try {
+        statusEl.textContent = 'Calling /{ig-user-id}?fields=id,username,media_count ...';
+        const url = 'https://graph.facebook.com/v21.0/' +
+          encodeURIComponent(igUserId) +
+          '?fields=id,username,media_count&access_token=' +
+          encodeURIComponent(token);
+
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (!res.ok) {
+          statusEl.textContent = 'Error from API: ' + (data.error && data.error.message ? data.error.message : 'Unknown error');
+          statusEl.className = 'status error';
+          return;
+        }
+
+        tableBody.innerHTML = '';
+        const rows = [
+          ['id', data.id],
+          ['username', data.username],
+          ['media_count', data.media_count]
+        ];
+        for (const [field, value] of rows) {
+          const tr = document.createElement('tr');
+          const td1 = document.createElement('td');
+          const td2 = document.createElement('td');
+          td1.textContent = field;
+          td2.textContent = value;
+          tr.appendChild(td1);
+          tr.appendChild(td2);
+          tableBody.appendChild(tr);
+        }
+
+        card.style.display = 'block';
+        statusEl.textContent = 'Loaded Business account info for @' + (data.username || 'dogcamp.gochon') + '.';
+      } catch (err) {
+        statusEl.textContent = 'Unexpected error: ' + err.message;
+        statusEl.className = 'status error';
+      }
+    }
+
+    async function searchHashtag() {
+      const token = document.getElementById('accessToken').value.trim();
+      const igUserId = document.getElementById('igUserId').value.trim();
+      const rawHashtag = document.getElementById('hashtagInput').value.trim();
+      const statusEl = document.getElementById('hashtagStatus');
+      const tableBody = document.getElementById('resultsTableBody');
+      const container = document.getElementById('resultsContainer');
+
+      statusEl.textContent = '';
+      statusEl.className = 'status';
+      tableBody.innerHTML = '';
+      container.style.display = 'none';
+
+      if (!token || !igUserId) {
+        statusEl.textContent = 'Please enter both access token and ig_user_id first.';
+        statusEl.className = 'status error';
+        return;
+      }
+      if (!rawHashtag) {
+        statusEl.textContent = 'Please enter an event hashtag (e.g. 2025트리샷이벤트).';
+        statusEl.className = 'status error';
+        return;
+      }
+
+      const hashtag = rawHashtag.replace(/^#/, '');
+
+      try {
+        statusEl.textContent = 'Searching hashtag ID via /ig_hashtag_search ...';
+
+        const searchUrl = 'https://graph.facebook.com/v21.0/ig_hashtag_search?user_id=' +
+          encodeURIComponent(igUserId) +
+          '&q=' + encodeURIComponent(hashtag) +
+          '&access_token=' + encodeURIComponent(token);
+
+        const resSearch = await fetch(searchUrl);
+        const dataSearch = await resSearch.json();
+
+        if (!resSearch.ok) {
+          statusEl.textContent = 'Error from hashtag search: ' +
+            (dataSearch.error && dataSearch.error.message ? dataSearch.error.message : 'Unknown error');
+          statusEl.className = 'status error';
+          return;
+        }
+
+        if (!dataSearch.data || dataSearch.data.length === 0) {
+          statusEl.textContent = 'No hashtag found for "' + hashtag + '".';
+          statusEl.className = 'status error';
+          return;
+        }
+
+        const hashtagId = dataSearch.data[0].id;
+
+        statusEl.textContent = 'Found hashtag ID ' + hashtagId + '. Loading recent_media ...';
+
+        const mediaUrl = 'https://graph.facebook.com/v21.0/' +
+          encodeURIComponent(hashtagId) +
+          '/recent_media?user_id=' +
+          encodeURIComponent(igUserId) +
+          '&fields=id,caption,media_type,media_url,permalink,timestamp' +
+          '&limit=25&access_token=' + encodeURIComponent(token);
+
+        const resMedia = await fetch(mediaUrl);
+        const dataMedia = await resMedia.json();
+
+        if (!resMedia.ok) {
+          statusEl.textContent = 'Error from recent_media: ' +
+            (dataMedia.error && dataMedia.error.message ? dataMedia.error.message : 'Unknown error');
+          statusEl.className = 'status error';
+          return;
+        }
+
+        if (!dataMedia.data || dataMedia.data.length === 0) {
+          statusEl.textContent = 'No public posts found for #' + hashtag + '.';
+          statusEl.className = 'status';
+          return;
+        }
+
+        let index = 1;
+        for (const item of dataMedia.data) {
+          const tr = document.createElement('tr');
+
+          const tdIndex = document.createElement('td');
+          tdIndex.textContent = index++;
+
+          const tdCaption = document.createElement('td');
+          tdCaption.className = 'caption-cell';
+          tdCaption.textContent = (item.caption || '').slice(0, 160);
+          if ((item.caption || '').length > 160) {
+            tdCaption.textContent += ' …';
+          }
+
+          const tdLink = document.createElement('td');
+          const link = document.createElement('a');
+          link.href = item.permalink;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.textContent = 'Open post';
+          tdLink.appendChild(link);
+
+          const tdTime = document.createElement('td');
+          tdTime.textContent = item.timestamp || '';
+
+          tr.appendChild(tdIndex);
+          tr.appendChild(tdCaption);
+          tr.appendChild(tdLink);
+          tr.appendChild(tdTime);
+          tableBody.appendChild(tr);
+        }
+
+        container.style.display = 'block';
+        statusEl.textContent = 'Loaded ' + dataMedia.data.length + ' public posts for #' + hashtag + '.';
+      } catch (err) {
+        statusEl.textContent = 'Unexpected error: ' + err.message;
+        statusEl.className = 'status error';
+      }
+    }
+  </script>
+</body>
+</html>
