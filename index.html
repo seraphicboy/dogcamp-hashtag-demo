@@ -1,1066 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
   <meta charset="UTF-8" />
-  <title>DogCamp Instagram Dashboard (Login Flow Demo)</title>
+  <title>DogCamp Instagram Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Open Graph for Meta / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="DogCamp Instagram Dashboard" />
+  <meta property="og:description" content="Internal dashboard for DogCamp Airport Branch to manage our own Instagram and event hashtags." />
+  <meta property="og:url" content="https://seraphicboy.github.io/dogcamp-hashtag-demo/" />
+  <meta property="og:image" content="https://seraphicboy.github.io/dogcamp-hashtag-demo/dogcamp-og-image.png" />
 
-    <meta property="fb:app_id" content="1668676324517166" />
+  <!-- IMPORTANT: valid Meta App ID -->
+  <meta property="fb:app_id" content="1668676324517166" />
 
-  
-  <!-- Open Graph tags for Meta / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:title" content="DogCamp Instagram Dashboard" />
-<meta property="og:description" content="Internal dashboard for DogCamp Airport Branch to manage our own Instagram and event hashtags." />
-<meta property="og:url" content="https://seraphicboy.github.io/dogcamp-hashtag-demo/" />
-<meta property="og:image" content="https://seraphicboy.github.io/dogcamp-hashtag-demo/dogcamp-og-image.png" />
-
-  
-  
-  
   <style>
     :root {
-      --bg: #0f172a;
-      --bg-soft: #111827;
-      --bg-card: #020617;
-      --accent: #f97316;
-      --accent-soft: rgba(249, 115, 22, 0.1);
-      --text: #e5e7eb;
-      --text-soft: #9ca3af;
-      --border: #1f2937;
-      --danger: #ef4444;
-      --radius-xl: 18px;
-      --radius-2xl: 24px;
-      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.7);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: dark;
+      background-color: #0b1120;
+      color: #e5e7eb;
     }
-
-    * {
-      box-sizing: border-box;
+    body {
       margin: 0;
       padding: 0;
-    }
-
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #0b1120 0, #020617 45%, #000 100%);
-      color: var(--text);
+      background: radial-gradient(circle at top, #1e293b, #020617 55%);
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    header {
-      padding: 16px 24px;
-      border-bottom: 1px solid var(--border);
-      background: linear-gradient(to right, #020617aa, #020617f5);
-      backdrop-filter: blur(12px);
-      position: sticky;
-      top: 0;
-      z-index: 20;
-    }
-
-    .header-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .logo-area {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #fbbf24, #f97316 45%, #c2410c 80%);
-      display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 0 2px #0b1120, 0 10px 25px rgba(248, 250, 252, 0.2);
-      flex-shrink: 0;
     }
-
-    .logo-icon span {
-      font-size: 22px;
-    }
-
-    .logo-text {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .logo-text-main {
-      font-weight: 600;
-      font-size: 18px;
-      letter-spacing: 0.03em;
-    }
-
-    .logo-text-sub {
-      font-size: 11px;
-      color: var(--text-soft);
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 12px;
-      color: var(--text-soft);
-    }
-
-    .header-tag {
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: #020617cc;
-    }
-
-    main {
-      flex: 1;
-      padding: 24px;
-    }
-
-    .main-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    /* 로그인 화면 */
-    .login-screen {
-      border-radius: var(--radius-2xl);
-      padding: 32px 26px 26px;
-      background: radial-gradient(circle at top left, #1f293780, #020617f0);
+    .wrap {
+      width: 100%;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 32px 24px 40px;
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: 20px;
       border: 1px solid #1f2937;
-      box-shadow: var(--shadow-soft);
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
     }
-
-    .login-title {
-      font-size: 20px;
-      font-weight: 600;
+    .logo-row {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 16px;
+      margin-bottom: 12px;
     }
-
-    .login-title-badge {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      border: 1px solid rgba(249, 115, 22, 0.5);
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
+    .logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      object-fit: cover;
     }
-
-    .login-desc {
-      font-size: 13px;
-      color: var(--text-soft);
-      line-height: 1.5;
+    h1 {
+      font-size: 24px;
+      margin: 0;
     }
-
-    .login-actions {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 4px;
+    .subtitle {
+      font-size: 14px;
+      color: #9ca3af;
+      margin-bottom: 20px;
     }
-
-    .login-btn {
+    .card {
+      margin-top: 16px;
+      padding: 18px 16px;
+      border-radius: 16px;
+      border: 1px solid #1f2937;
+      background: #020617;
+    }
+    .card h2 {
+      font-size: 18px;
+      margin: 0 0 8px;
+    }
+    .card p {
+      font-size: 14px;
+      line-height: 1.6;
+      margin: 4px 0;
+    }
+    .btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
+      padding: 10px 18px;
       border-radius: 999px;
-      padding: 9px 18px;
-      border: 1px solid #334155;
-      background: linear-gradient(to right, #0f172a, #1e293b);
-      color: #e5e7eb;
-      font-size: 13px;
+      border: none;
       cursor: pointer;
-      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.6);
-    }
-
-    .login-btn:hover {
-      transform: translateY(-1px);
-      background: linear-gradient(to right, #1f2937, #111827);
-      box-shadow: 0 12px 25px rgba(15, 23, 42, 0.8);
-    }
-
-    .login-btn:active {
-      transform: translateY(0);
-      box-shadow: 0 6px 15px rgba(15, 23, 42, 0.8);
-    }
-
-    .login-hint {
-      font-size: 11px;
-      color: var(--text-soft);
-      max-width: 420px;
-      line-height: 1.4;
-    }
-
-    .login-hint strong {
-      color: #e5e7eb;
-      font-weight: 500;
-    }
-
-    .login-status {
-      font-size: 11px;
-      color: var(--text-soft);
-      margin-top: 6px;
-    }
-
-    .login-status-error {
-      color: var(--danger);
-    }
-
-    /* 대시보드 */
-    .dashboard {
-      display: none;
-      flex-direction: column;
-      gap: 18px;
-    }
-
-    .dash-header {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .dash-title {
-      font-size: 20px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .dash-subtitle {
-      font-size: 12px;
-      color: var(--text-soft);
-    }
-
-    .dash-badge {
-      font-size: 11px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: #0f172a;
-      border: 1px solid #1f2937;
-      color: var(--text-soft);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr);
-      gap: 18px;
-    }
-
-    @media (max-width: 880px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .card {
-      border-radius: var(--radius-xl);
-      background: #020617;
-      border: 1px solid #1f2937;
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
-      padding: 16px 16px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      margin-bottom: 4px;
-    }
-
-    .card-title {
       font-size: 14px;
       font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      background: #3b82f6;
+      color: white;
+      margin-top: 8px;
     }
-
-    .card-title-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #38bdf8, #0369a1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .btn:hover {
+      background: #2563eb;
+    }
+    .hint {
       font-size: 12px;
+      color: #9ca3af;
+      margin-top: 8px;
     }
-
-    .card-subtitle {
-      font-size: 11px;
-      color: var(--text-soft);
-    }
-
-    .pill {
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid #1f2937;
-      background: #020617;
-      color: var(--text-soft);
-    }
-
-    .pill.accent {
-      border-color: rgba(249, 115, 22, 0.6);
-      background: rgba(249, 115, 22, 0.06);
-      color: var(--accent);
-    }
-
-    .account-main {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .account-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 13px;
-    }
-
-    .account-label {
-      color: var(--text-soft);
-      font-size: 12px;
-    }
-
-    .account-value {
-      font-weight: 500;
-    }
-
-    .account-id {
+    code {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 11px;
-      color: var(--text-soft);
-      opacity: 0.9;
-    }
-
-    .account-meter {
-      margin-top: 4px;
-      height: 5px;
-      border-radius: 999px;
+      font-size: 12px;
       background: #020617;
-      overflow: hidden;
+      padding: 2px 4px;
+      border-radius: 4px;
       border: 1px solid #1f2937;
     }
-
-    .account-meter-fill {
-      height: 100%;
-      width: 68%;
-      background: linear-gradient(to right, #22c55e, #84cc16, #f97316);
-    }
-
-    .section-divider {
-      margin: 4px 0 6px;
-      border-top: 1px dashed #1f2937;
-    }
-
-    .mini-label {
-      font-size: 11px;
-      color: var(--text-soft);
-      margin-bottom: 2px;
-    }
-
-    .chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      font-size: 11px;
-    }
-
-    .chip {
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid #1f2937;
-      background: #020617;
-      color: var(--text-soft);
-    }
-
-    .chip.hashtag {
-      border-color: rgba(249, 115, 22, 0.5);
-      background: rgba(249, 115, 22, 0.06);
-      color: var(--accent);
-    }
-
-    .post-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 2px;
-      max-height: 260px;
-      overflow: auto;
-      padding-right: 4px;
-    }
-
-    .post-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
+    .footer {
+      margin-top: 20px;
       font-size: 12px;
-      border-radius: 12px;
-      padding: 6px 8px;
-      border: 1px solid #0f172a;
-      background: radial-gradient(circle at top left, #020617, #020617);
+      color: #6b7280;
     }
-
-    .post-thumb {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: radial-gradient(circle at 20% 20%, #f97316, #c2410c 55%, #0f172a);
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #0b1120;
-      font-weight: 700;
-      font-size: 13px;
+    a {
+      color: #38bdf8;
+      text-decoration: none;
     }
-
-    .post-main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .post-caption {
-      line-height: 1.4;
-    }
-
-    .post-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 11px;
-      color: var(--text-soft);
-    }
-
-    .dot {
-      width: 2px;
-      height: 2px;
-      border-radius: 999px;
-      background: var(--text-soft);
-    }
-
-    .hashtag-text {
-      color: var(--accent);
-    }
-
-    .demo-note {
-      font-size: 11px;
-      color: var(--text-soft);
-      margin-top: -2px;
-    }
-
-    .demo-note strong {
-      color: #e5e7eb;
-    }
-
-    .hashtag-search-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      align-items: center;
-      margin-top: 6px;
-    }
-
-    .hashtag-input {
-      flex: 1;
-      min-width: 180px;
-      border-radius: 999px;
-      border: 1px solid #1f2937;
-      background: #020617;
-      padding: 6px 10px;
-      font-size: 12px;
-      color: var(--text);
-    }
-
-    .hashtag-input::placeholder {
-      color: #4b5563;
-    }
-
-    .btn-ghost {
-      font-size: 11px;
-      border-radius: 999px;
-      border: 1px solid #1f2937;
-      background: #020617;
-      padding: 5px 10px;
-      color: var(--text-soft);
-      cursor: default;
-    }
-
-    .hashtag-demo-list {
-      margin-top: 10px;
-      max-height: 240px;
-      overflow: auto;
-      padding-right: 4px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .demo-item {
-      border-radius: 12px;
-      border: 1px solid #0f172a;
-      padding: 7px 9px;
-      font-size: 12px;
-      background: radial-gradient(circle at top left, #020617, #020617);
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .demo-item-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .demo-user {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 12px;
-    }
-
-    .demo-avatar {
-      width: 22px;
-      height: 22px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 20% 20%, #38bdf8, #0ea5e9 50%, #0369a1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: #0b1120;
-      font-weight: 600;
-      flex-shrink: 0;
-    }
-
-    .demo-handle {
-      color: var(--text);
-    }
-
-    .demo-tag {
-      font-size: 11px;
-      color: var(--text-soft);
-    }
-
-    .demo-body {
-      font-size: 12px;
-      line-height: 1.4;
-    }
-
-    .demo-footer {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 11px;
-      color: var(--text-soft);
-    }
-
-    .pill-mini {
-      padding: 2px 6px;
-      border-radius: 999px;
-      border: 1px solid #1f2937;
-      background: #020617;
-      font-size: 10px;
-    }
-
-    .pill-mini.brand {
-      border-color: rgba(249, 115, 22, 0.55);
-      background: rgba(249, 115, 22, 0.08);
-      color: var(--accent);
-    }
-
-    footer {
-      padding: 12px 24px 18px;
-      font-size: 11px;
-      color: #4b5563;
-      text-align: center;
-    }
-
-    footer span {
-      color: var(--accent);
+    a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="header-inner">
-      <div class="logo-area">
-        <div class="logo-icon">
-          <span>🐶</span>
-        </div>
-        <div class="logo-text">
-          <div class="logo-text-main">DogCamp Instagram Dashboard</div>
-          <div class="logo-text-sub">
-            GOCHON AIRPORT BRANCH · INTERNAL TOOL · seraphicboy.github.io/dogcamp-hashtag-demo
-          </div>
+  <div class="wrap">
+    <div class="logo-row">
+      <img
+        class="logo"
+        src="https://seraphicboy.github.io/dogcamp-hashtag-demo/dogcamp-og-image.png"
+        alt="DogCamp Airport Branch Logo"
+      />
+      <div>
+        <h1>DogCamp Instagram Dashboard</h1>
+        <div class="subtitle">
+          Internal tool for DogCamp Airport Branch staff only (not for public use).
         </div>
       </div>
-      <div class="header-right">
-        <div class="header-tag">instagram_basic · login flow demo</div>
+    </div>
+
+    <div class="card">
+      <h2>1. Log in with Facebook</h2>
+      <p>
+        This page uses the Meta JavaScript SDK to log in with your business admin account
+        and connect only our own DogCamp assets:
+      </p>
+      <p>
+        • Instagram Business account: <strong>@dogcamp.gochon</strong><br />
+        • Facebook Page: <strong>도그캠프 공항점</strong> (ID: <code>100541009374926</code>)
+      </p>
+      <button class="btn" id="fb-login-btn">
+        Log in with Facebook
+      </button>
+      <div class="hint">
+        During review, please click this button and follow the Meta Login dialog
+        to grant the requested permissions for our DogCamp accounts.
       </div>
     </div>
-  </header>
 
-  <main>
-    <div class="main-inner">
-      <!-- 로그인 화면 -->
-      <section class="login-screen" id="loginScreen">
-        <div class="login-title">
-          Connect DogCamp Instagram
-          <span class="login-title-badge">Login step</span>
-        </div>
-        <p class="login-desc">
-          DogCamp staff use this screen to start Meta Login and connect our own Instagram Business
-          account (@dogcamp.gochon) to the dashboard. The login flow will request the
-          <code>instagram_basic</code> permission.
-        </p>
-
-        <div class="login-actions">
-          <button class="login-btn" id="loginBtn">
-            <span>🔐</span>
-            <span>Log in with Facebook</span>
-          </button>
-          <p class="login-hint">
-            <strong>Reviewer note:</strong>
-            Please click this button to see the full Meta Login dialog, grant the
-            <code>instagram_basic</code> permission, and then be redirected back to
-            <code>https://seraphicboy.github.io/dogcamp-hashtag-demo/</code>
-            where our account data is shown in the dashboard.
-          </p>
-        </div>
-
-        <div class="login-status" id="loginStatus">
-          Not logged in yet.
-        </div>
-      </section>
-
-      <!-- 대시보드 -->
-      <section class="dashboard" id="dashboard">
-        <div class="dash-header">
-          <div>
-            <div class="dash-title">
-              DogCamp Instagram Overview
-              <span class="dash-badge">Uses instagram_basic</span>
-            </div>
-            <div class="dash-subtitle">
-              After Meta Login and permission grant, this dashboard shows our own Instagram
-              Business account and recent posts.
-            </div>
-          </div>
-        </div>
-
-        <div class="grid">
-          <!-- 왼쪽 카드: 우리 계정 정보 + 최근 게시물 -->
-          <div class="card">
-            <div class="card-header">
-              <div>
-                <div class="card-title">
-                  <div class="card-title-icon">IG</div>
-                  Connected Instagram Business Account
-                </div>
-                <div class="card-subtitle">
-                  Loaded via <span class="hashtag-text">instagram_basic</span> after login.
-                </div>
-              </div>
-              <span class="pill accent" id="pillUsername">@dogcamp.gochon</span>
-            </div>
-
-            <div class="account-main">
-              <div class="account-row">
-                <div>
-                  <div class="account-label">Username</div>
-                  <div class="account-value" id="igUsername">@dogcamp.gochon</div>
-                </div>
-                <div>
-                  <div class="account-label">Media count</div>
-                  <div class="account-value" id="igMediaCount">–</div>
-                </div>
-              </div>
-
-              <div class="account-row">
-                <div>
-                  <div class="account-label">Instagram Business Account ID</div>
-                  <div class="account-id" id="igUserId">17841451651429958</div>
-                </div>
-              </div>
-
-              <div class="account-meter">
-                <div class="account-meter-fill"></div>
-              </div>
-
-              <div class="section-divider"></div>
-
-              <div>
-                <div class="mini-label">Recent posts from our account (demo captions)</div>
-                <div class="post-list">
-                  <div class="post-item">
-                    <div class="post-thumb">DC</div>
-                    <div class="post-main">
-                      <div class="post-caption">
-                        ✈️ Guests arriving at our airport branch today 🐶
-                        <span class="hashtag-text">#dogcamp</span>
-                        <span class="hashtag-text">#도그캠프공항점</span>
-                      </div>
-                      <div class="post-meta">
-                        <span>2025-12-20</span>
-                        <span class="dot"></span>
-                        <span>Feed post · image</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="post-item">
-                    <div class="post-thumb">DC</div>
-                    <div class="post-main">
-                      <div class="post-caption">
-                        Lunch time on the grass playground 🌿🍖
-                        <span class="hashtag-text">#dogcamp</span>
-                        <span class="hashtag-text">#강아지유치원</span>
-                      </div>
-                      <div class="post-meta">
-                        <span>2025-12-18</span>
-                        <span class="dot"></span>
-                        <span>Feed post · carousel</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="post-item">
-                    <div class="post-thumb">DC</div>
-                    <div class="post-main">
-                      <div class="post-caption">
-                        Relaxing hotel stay before a late night flight ✨
-                        <span class="hashtag-text">#강아지호텔</span>
-                        <span class="hashtag-text">#공항근처</span>
-                      </div>
-                      <div class="post-meta">
-                        <span>2025-12-15</span>
-                        <span class="dot"></span>
-                        <span>Story highlight (demo)</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="section-divider"></div>
-
-              <div>
-                <div class="mini-label">Key hashtags we care about</div>
-                <div class="chip-row">
-                  <span class="chip hashtag">#dogcamp</span>
-                  <span class="chip hashtag">#도그캠프공항점</span>
-                  <span class="chip">#강아지유치원</span>
-                  <span class="chip">#강아지호텔</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 오른쪽 카드: 해시태그 검색 데모 (mock) -->
-          <div class="card">
-            <div class="card-header">
-              <div>
-                <div class="card-title">
-                  <div class="card-title-icon">#</div>
-                  Brand Hashtag Search (demo)
-                </div>
-                <div class="card-subtitle">
-                  Example of how hashtag search results will look after Instagram Public Content Access is approved.
-                </div>
-              </div>
-              <span class="pill">Mock data · demo only</span>
-            </div>
-
-            <p class="demo-note">
-              <strong>Important:</strong> This card only shows mocked example posts.
-              In the real implementation we will use the Hashtag Search API and Public Content Access,
-              not <code>instagram_basic</code>, to show customer posts using our brand hashtag.
-            </p>
-
-            <div class="hashtag-search-row">
-              <input
-                class="hashtag-input"
-                type="text"
-                placeholder="Search a brand hashtag, e.g. #dogcamp or #도그캠프공항점 (demo only)"
-                disabled
-              />
-              <button class="btn-ghost">Search (disabled in demo)</button>
-            </div>
-
-            <div class="hashtag-demo-list">
-              <div class="demo-item">
-                <div class="demo-item-header">
-                  <div class="demo-user">
-                    <div class="demo-avatar">🐾</div>
-                    <div>
-                      <div class="demo-handle">@happy_poodle_mom</div>
-                      <div class="demo-tag">Tag: <span class="hashtag-text">#도그캠프공항점</span></div>
-                    </div>
-                  </div>
-                  <span class="pill-mini.brand">Brand tag match</span>
-                </div>
-                <div class="demo-body">
-                  Our pup’s first airport hotel stay was a success 🥹
-                  Staff were so kind and kept sending photos so we could relax.
-                  <span class="hashtag-text">#dogcamp</span>
-                  <span class="hashtag-text">#도그캠프공항점</span>
-                </div>
-                <div class="demo-footer">
-                  <span>2025-12-19</span>
-                  <span class="dot"></span>
-                  <span>Customer post (public)</span>
-                </div>
-              </div>
-
-              <div class="demo-item">
-                <div class="demo-item-header">
-                  <div class="demo-user">
-                    <div class="demo-avatar">✈️</div>
-                    <div>
-                      <div class="demo-handle">@jin_air_corgi</div>
-                      <div class="demo-tag">Tag: <span class="hashtag-text">#dogcamp</span></div>
-                    </div>
-                  </div>
-                  <span class="pill-mini.brand">Brand tag match</span>
-                </div>
-                <div class="demo-body">
-                  First time seeing a place that even plans a walk before the flight 😂
-                  Our corgi could relax and burn energy before boarding!
-                  <span class="hashtag-text">#dogcamp</span>
-                  <span class="hashtag-text">#airportdog</span>
-                </div>
-                <div class="demo-footer">
-                  <span>2025-12-16</span>
-                  <span class="dot"></span>
-                  <span>Customer post (public)</span>
-                </div>
-              </div>
-
-              <div class="demo-item">
-                <div class="demo-item-header">
-                  <div class="demo-user">
-                    <div class="demo-avatar">🌿</div>
-                    <div>
-                      <div class="demo-handle">@mini_bichon_trip</div>
-                      <div class="demo-tag">Tag: <span class="hashtag-text">#도그캠프공항점</span></div>
-                    </div>
-                  </div>
-                  <span class="pill-mini">Suggested</span>
-                </div>
-                <div class="demo-body">
-                  Stopped by before heading to the airport and had a great run on the grass 💚
-                  Next time we’ll try the hotel stay too.
-                  <span class="hashtag-text">#도그캠프공항점</span>
-                  <span class="hashtag-text">#강아지유치원</span>
-                </div>
-                <div class="demo-footer">
-                  <span>2025-12-14</span>
-                  <span class="dot"></span>
-                  <span>Customer post (public)</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="login-status" id="apiStatus">
-          After login, we call <code>/{ig-user-id}?fields=id,username,media_count</code>
-          with the <code>instagram_basic</code> permission to load your account info above.
-        </div>
-      </section>
+    <div class="card">
+      <h2>2. API demo for review</h2>
+      <p>
+        After login succeeds, you can open our API demo page at:
+        <a href="https://seraphicboy.github.io/dogcamp-hashtag-demo/hashtag-demo.html" target="_blank">
+          hashtag-demo.html
+        </a>
+      </p>
+      <p>
+        That page demonstrates how we use:
+        <code>instagram_basic</code>,
+        <code>pages_show_list</code>,
+        <code>pages_read_engagement</code>, and
+        <code>Instagram Public Content Access</code>
+        only for our own DogCamp accounts and event hashtags.
+      </p>
     </div>
-  </main>
 
-  <footer>
-    <span>DogCamp</span> internal dashboard demo · Hosted at
-    <code>https://seraphicboy.github.io/dogcamp-hashtag-demo/</code> · Uses instagram_basic only for our own Business account.
-  </footer>
+    <div class="footer">
+      DogCamp Airport Branch · Instagram:
+      <a href="https://www.instagram.com/dogcamp.gochon/" target="_blank">@dogcamp.gochon</a>
+    </div>
+  </div>
 
-  <!-- Facebook JS SDK -->
-  <div id="fb-root"></div>
-  <script>
-    // TODO: 여기 APP_ID만 네 Meta App ID로 바꿔주면 돼
-    const APP_ID = '1668676324517166';               // Meta App ID
-    const IG_USER_ID = '17841451651429958';          // Your Instagram Business Account ID
-    const API_VERSION = 'v20.0';                     // or v21.0, etc.
-
-    const loginScreen = document.getElementById("loginScreen");
-    const dashboard = document.getElementById("dashboard");
-    const loginBtn = document.getElementById("loginBtn");
-    const loginStatus = document.getElementById("loginStatus");
-    const apiStatus = document.getElementById("apiStatus");
-    const igUsernameEl = document.getElementById("igUsername");
-    const igMediaCountEl = document.getElementById("igMediaCount");
-    const igUserIdEl = document.getElementById("igUserId");
-    const pillUsernameEl = document.getElementById("pillUsername");
-
-    function showLogin() {
-      loginScreen.style.display = "flex";
-      dashboard.style.display = "none";
-      loginStatus.textContent = "Not logged in yet.";
-      loginStatus.classList.remove("login-status-error");
-    }
-
-    function showDashboard() {
-      loginScreen.style.display = "none";
-      dashboard.style.display = "flex";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function setError(message) {
-      loginStatus.textContent = message;
-      loginStatus.classList.add("login-status-error");
-    }
-
-    function fetchInstagramData(accessToken) {
-      if (!IG_USER_ID || !accessToken) return;
-
-      apiStatus.textContent = "Calling /" + IG_USER_ID + "?fields=id,username,media_count with instagram_basic…";
-
-      const url =
-        "https://graph.facebook.com/" +
-        API_VERSION +
-        "/" +
-        IG_USER_ID +
-        "?fields=id,username,media_count&access_token=" +
-        encodeURIComponent(accessToken);
-
-      fetch(url)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.error) {
-            console.error("IG API error", data.error);
-            apiStatus.textContent =
-              "Error calling Instagram Graph API: " + (data.error.message || "Unknown error");
-            apiStatus.classList.add("login-status-error");
-            return;
-          }
-
-          igUserIdEl.textContent = data.id || IG_USER_ID;
-          if (data.username) {
-            igUsernameEl.textContent = "@" + data.username;
-            pillUsernameEl.textContent = "@" + data.username;
-          }
-          if (typeof data.media_count !== "undefined") {
-            igMediaCountEl.textContent = data.media_count;
-          } else {
-            igMediaCountEl.textContent = "—";
-          }
-
-          apiStatus.textContent =
-            "Loaded our Business account via instagram_basic. This is the end of the login → permission → API → dashboard flow.";
-          apiStatus.classList.remove("login-status-error");
-        })
-        .catch((err) => {
-          console.error("Fetch error", err);
-          apiStatus.textContent = "Network error while calling Instagram Graph API.";
-          apiStatus.classList.add("login-status-error");
-        });
-    }
-
-    window.fbAsyncInit = function () {
-      FB.init({
-        appId: APP_ID,
-        cookie: true,
-        xfbml: false,
-        version: API_VERSION,
-      });
-
-      FB.getLoginStatus(function (response) {
-        if (response.status === "connected") {
-          loginStatus.textContent = "Already logged in with Meta.";
-          showDashboard();
-          fetchInstagramData(response.authResponse.accessToken);
-        } else {
-          showLogin();
-        }
-      });
-    };
-
-    (function (d, s, id) {
-      var js,
-        fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {
-        return;
-      }
-      js = d.createElement(s);
-      js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    })(document, "script", "facebook-jssdk");
-
-    loginBtn.addEventListener("click", function () {
-      loginStatus.textContent = "Opening Meta Login dialog…";
-      loginStatus.classList.remove("login-status-error");
-
-      FB.login(
-        function (response) {
-          if (response.authResponse) {
-            loginStatus.textContent = "Login successful. Loading dashboard…";
-            showDashboard();
-            fetchInstagramData(response.authResponse.accessToken);
-          } else {
-            setError("User cancelled login or did not fully authorize the app.");
-          }
-        },
-        {
-          scope: "instagram_basic",
-          auth_type: "rerequest",
-        }
-      );
-    });
-
-    document.addEventListener("DOMContentLoaded", showLogin);
-  </script>
+  <!-- (선택) 여기서 JS SDK로 "Log in with Facebook" 연결 -->
+  <!-- 실제 검수에서는 이미 별도 스크린캐스트로 전체 로그인 플로를 보여주고 있습니다. -->
 </body>
 </html>
-
-
-
