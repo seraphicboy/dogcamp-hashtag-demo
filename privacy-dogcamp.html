@@ -8,9 +8,8 @@
   <!-- Open Graph tags for Meta / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Privacy Policy – DogCamp Instagram Dashboard" />
-  <meta property="og:description" content="Privacy Policy for DogCamp Airport Branch internal Instagram dashboard app using instagram_basic for our own Business account." />
+  <meta property="og:description" content="Privacy Policy for DogCamp Airport Branch internal dashboard app using Meta API permissions only for our own Business accounts and public brand/event hashtags." />
   <meta property="og:url" content="https://seraphicboy.github.io/dogcamp-hashtag-demo/privacy-dogcamp.html" />
-  <!-- 여기 이미지 파일 이름은 실제 업로드한 파일 이름에 맞게 수정 -->
   <meta property="og:image" content="https://seraphicboy.github.io/dogcamp-hashtag-demo/dogcamp-og-image.png" />
 
   <!-- Link this page to our Meta App -->
@@ -73,7 +72,7 @@
 </head>
 <body>
   <div class="wrap">
-    <!-- 화면에 로고도 보이게 하고 싶으면 아래 주석 해제 후 src만 네 파일로 수정 -->
+    <!-- 필요하면 로고 표시 -->
     <!--
     <div style="margin-bottom: 16px;">
       <img
@@ -96,65 +95,98 @@
       uses data obtained from Meta platforms through our internal web application,
       <strong>공항점 인스타분석 (DogCamp Instagram Dashboard)</strong>.
       This app is an internal tool used only by DogCamp staff to connect and monitor
-      our own Instagram Business account <strong>@dogcamp.gochon</strong>.
+      our own Instagram Business account <strong>@dogcamp.gochon</strong> and our own Facebook Page
+      <strong>도그캠프 공항점</strong>.
     </p>
 
     <h2>1. Who we are</h2>
     <p>
       DogCamp Airport Branch is a pet hotel and dog kindergarten business in Korea.
-      We operate the Instagram Business account <strong>@dogcamp.gochon</strong> to share
-      updates about our services and to communicate with customers.
+      We operate the Instagram Business account <strong>@dogcamp.gochon</strong> and the
+      Facebook Page <strong>도그캠프 공항점</strong> to share updates about our services and
+      communicate with customers.
       This dashboard app is owned and operated by DogCamp and is not offered to the general public.
     </p>
 
     <h2>2. What data we access from Meta</h2>
     <p>
-      Through the Meta API, our app requests the following permission:
-      <code>instagram_basic</code>.
+      Through the Meta API, our app requests the following permissions:
+      <code>instagram_basic</code>, <code>pages_show_list</code>,
+      <code>pages_read_engagement</code>, and
+      <code>Instagram Public Content Access</code>.
     </p>
-    <p>
-      Using this permission, we only access basic information about our own
-      Instagram Business account, specifically:
-    </p>
+
+    <p>Using these permissions, we access only the following types of data:</p>
+
     <ul>
-      <li>Instagram Business Account ID (<code>id</code>)</li>
-      <li>Username (<code>username</code>)</li>
-      <li>Total number of media posts (<code>media_count</code>)</li>
+      <li>
+        <strong>instagram_basic</strong> – basic information for our own Instagram Business account:
+        <ul>
+          <li>Instagram Business Account ID (<code>id</code>)</li>
+          <li>Username (<code>username</code>)</li>
+          <li>Total number of media posts (<code>media_count</code>)</li>
+        </ul>
+      </li>
+      <li>
+        <strong>pages_show_list</strong> – list of Facebook Pages that our own business admin account can manage:
+        <ul>
+          <li>Page ID (<code>id</code>)</li>
+          <li>Page name (<code>name</code>)</li>
+        </ul>
+        We use this only to confirm and select our own Page <strong>도그캠프 공항점</strong>.
+      </li>
+      <li>
+        <strong>pages_read_engagement</strong> – basic engagement metrics for our own Page posts:
+        <ul>
+          <li>Post impressions (<code>post_impressions</code>)</li>
+          <li>Post engaged users (<code>post_engaged_users</code>)</li>
+        </ul>
+        These metrics are used only to understand which DogCamp posts perform better so we can improve our content.
+      </li>
+      <li>
+        <strong>Instagram Public Content Access</strong> – public posts that use our own brand/event hashtags,
+        for example <code>#도그캠프공항점</code>, <code>#2023트리샷이벤트</code>,
+        <code>#2024트리샷이벤트</code>, <code>#2025트리샷이벤트</code>.
+        We only view posts that customers have voluntarily made public with these hashtags.
+      </li>
     </ul>
 
     <p>
-      Currently, our app calls only this read-only endpoint:
-    </p>
-    <p>
-      <code>/{ig-user-id}?fields=id,username,media_count</code>
-    </p>
-
-    <p>
-      We do <strong>not</strong> post, edit, or delete any content on Instagram via the API.
-      We do <strong>not</strong> read or store direct messages, comments, or private data from
-      other users. We only access basic information for our own Business account that we own and control.
+      We do <strong>not</strong> post, edit, or delete any content on Instagram or Facebook via the API.
+      We do <strong>not</strong> read or store direct messages, private comments, or private data from
+      other users. We only access data for our own Business accounts and public content that customers
+      choose to share with our brand/event hashtags.
     </p>
 
     <h2>3. How we use this data</h2>
-    <p>
-      The data obtained via <code>instagram_basic</code> is used only for the following purposes:
-    </p>
+    <p>The data obtained via Meta permissions is used only for the following purposes:</p>
     <ul>
-      <li>To verify which Instagram Business account is connected to our internal dashboard</li>
+      <li>To verify which Instagram Business account and Facebook Page are connected to our internal dashboard</li>
       <li>To display basic account information (ID, username, media count) to our staff</li>
-      <li>To confirm that our connection to the Instagram Graph API is working correctly</li>
+      <li>To view simple engagement metrics for our own DogCamp Page posts</li>
+      <li>
+        To list public posts that use our own event hashtags so we can:
+        <ul>
+          <li>confirm which customers joined events like “트리샷이벤트”, and</li>
+          <li>
+            optionally re-share some posts to our Instagram Stories with proper credit
+            to the customer.
+          </li>
+        </ul>
+      </li>
     </ul>
 
     <p>
       The app is an internal tool for DogCamp staff and is not accessible to customers
-      or the general public. We do not use this data for advertising networks or for
-      cross-app tracking.
+      or the general public. We do not use this data for third-party advertising networks
+      or cross-app tracking.
     </p>
 
     <h2>4. Data storage and retention</h2>
     <p>
       Our current implementation runs as a simple web dashboard.
-      The Instagram Business account data (ID, username, media_count) is:
+      Data from Meta (such as account IDs, usernames, media counts, Page IDs, and engagement metrics)
+      is:
     </p>
     <ul>
       <li>Requested from Meta APIs when a staff member logs in and opens the dashboard</li>
@@ -177,30 +209,13 @@
       business purposes and is not provided to other businesses.
     </p>
 
-    <h2>6. Future hashtag features</h2>
-    <p>
-      In the future, we plan to request <strong>Instagram Public Content Access</strong>
-      in order to display public posts that contain our brand hashtags
-      (for example, <code>#도그캠프공항점</code> or <code>#dogcamp</code>).
-    </p>
-    <p>
-      Those hashtag features will use the Hashtag Search API and the Public Content
-      Access permission. They will <strong>not</strong> rely on the
-      <code>instagram_basic</code> permission.
-    </p>
-    <p>
-      Even for hashtag features, we only intend to view and organize public posts
-      that customers choose to share with our brand hashtags, for the purpose of
-      brand monitoring and customer engagement.
-    </p>
-
-    <h2>7. Children’s privacy</h2>
+    <h2>6. Children’s privacy</h2>
     <p>
       This app is an internal business tool and is not directed to children.
       It is used only by DogCamp staff members.
     </p>
 
-    <h2>8. Security</h2>
+    <h2>7. Security</h2>
     <p>
       We limit access to this dashboard to authorized DogCamp staff only.
       We follow Meta’s Platform Policies regarding access tokens and platform data.
@@ -208,7 +223,7 @@
       customers via this app.
     </p>
 
-    <h2>9. Contact us</h2>
+    <h2>8. Contact us</h2>
     <p>
       If you have any questions about this Privacy Policy or how we use Meta platform data,
       you can contact us at:
@@ -218,7 +233,7 @@
       Instagram: <a href="https://www.instagram.com/dogcamp.gochon/" target="_blank">@dogcamp.gochon</a>
     </p>
 
-    <h2>10. Changes to this policy</h2>
+    <h2>9. Changes to this policy</h2>
     <p>
       We may update this Privacy Policy from time to time to reflect changes in our
       internal tools or Meta’s platform requirements. If we make significant changes,
