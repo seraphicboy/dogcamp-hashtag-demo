@@ -1,36 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
-  <meta property="fb:app_id" content="1668676324517166" />
-
-  
-  <!-- Open Graph tags for Meta / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:title" content="DogCamp Instagram Dashboard" />
-<meta property="og:description" content="Internal dashboard for DogCamp Airport Branch to manage our own Instagram and event hashtags." />
-<meta property="og:url" content="https://seraphicboy.github.io/dogcamp-hashtag-demo/" />
-<meta property="og:image" content="https://seraphicboy.github.io/dogcamp-hashtag-demo/dogcamp-og-image.png" />
-
   <meta charset="UTF-8" />
-  <title>DogCamp Instagram & Page Demo – Internal Dashboard</title>
+  <title>DogCamp Hashtag & Permissions Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- (선택) Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="DogCamp Hashtag & Permissions Demo" />
+  <meta property="og:description" content="Internal demo for instagram_basic, pages_show_list, pages_read_engagement, and Instagram Public Content Access, used only for DogCamp’s own accounts and event hashtags." />
+  <meta property="og:url" content="https://seraphicboy.github.io/dogcamp-hashtag-demo/hashtag-demo.html" />
+  <meta property="og:image" content="https://seraphicboy.github.io/dogcamp-hashtag-demo/dogcamp-og-image.png" />
+  <meta property="fb:app_id" content="1668676324517166" />
 
   <style>
     :root {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color-scheme: dark;
+      background-color: #020617;
+      color: #e5e7eb;
     }
     body {
       margin: 0;
-      padding: 0;
-      background: #020617;
-      color: #e5e7eb;
+      padding: 24px 10px 40px;
+      background: radial-gradient(circle at top, #1f2937, #020617 55%);
     }
-    .page {
+    .container {
       max-width: 1100px;
-      margin: 32px auto 48px;
-      padding: 0 16px;
+      margin: 0 auto;
     }
     h1 {
       font-size: 24px;
@@ -43,634 +40,406 @@
     }
     .grid {
       display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 18px;
-    }
-    @media (min-width: 960px) {
-      .grid-2 {
-        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr);
-      }
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      align-items: flex-start;
     }
     .card {
-      background: #020617;
+      padding: 16px 14px 18px;
       border-radius: 16px;
       border: 1px solid #1f2937;
-      padding: 16px 16px 18px;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+      background: #020617;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.7);
     }
     .card h2 {
-      margin: 0 0 8px;
-      font-size: 18px;
+      font-size: 16px;
+      margin: 0 0 6px;
     }
-    .card h3 {
-      margin: 8px 0 6px;
-      font-size: 15px;
+    .card p {
+      font-size: 13px;
+      line-height: 1.6;
+      margin: 4px 0;
     }
     label {
       display: block;
-      font-size: 13px;
+      font-size: 12px;
       margin-top: 6px;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
       color: #9ca3af;
     }
-    input, textarea, select {
+    input[type="text"] {
       width: 100%;
-      box-sizing: border-box;
+      padding: 7px 8px;
       border-radius: 10px;
       border: 1px solid #1f2937;
       background: #020617;
       color: #e5e7eb;
-      padding: 7px 9px;
       font-size: 13px;
     }
     textarea {
-      min-height: 56px;
+      width: 100%;
+      min-height: 80px;
+      padding: 7px 8px;
+      border-radius: 10px;
+      border: 1px solid #1f2937;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       resize: vertical;
     }
-    button {
-      margin-top: 10px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid #38bdf8;
-      background: #0f172a;
-      color: #e0f2fe;
-      font-size: 13px;
-      cursor: pointer;
+    .btn {
+      margin-top: 8px;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
-    }
-    button span.pill {
-      font-size: 11px;
-      padding: 1px 8px;
+      padding: 8px 14px;
       border-radius: 999px;
-      border: 1px solid #1f2937;
-      background: #020617;
-      color: #a5f3fc;
+      border: none;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      background: #3b82f6;
+      color: white;
     }
-    button:hover {
-      background: #020617;
+    .btn:hover {
+      background: #2563eb;
     }
-    .hint {
+    .section-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+    .small {
       font-size: 12px;
       color: #9ca3af;
-      margin-top: 4px;
     }
-    .tagpill {
-      display: inline-flex;
-      align-items: center;
-      padding: 2px 7px;
-      border-radius: 999px;
-      font-size: 11px;
-      border: 1px solid #374151;
-      margin-right: 4px;
-      margin-bottom: 4px;
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
       background: #020617;
+      padding: 1px 4px;
+      border-radius: 4px;
+      border: 1px solid #1f2937;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
+    .result-box {
       margin-top: 8px;
       font-size: 12px;
-    }
-    th, td {
-      border-bottom: 1px solid #111827;
-      padding: 4px 6px;
-      vertical-align: top;
-      text-align: left;
-    }
-    th {
-      font-weight: 600;
-      font-size: 11px;
-      color: #9ca3af;
-    }
-    td a {
-      color: #38bdf8;
-      text-decoration: none;
-      word-break: break-all;
-    }
-    td a:hover {
-      text-decoration: underline;
-    }
-    .status {
-      font-size: 12px;
-      color: #a5f3fc;
-      margin-top: 6px;
-      white-space: pre-line;
-    }
-    .status.error {
-      color: #fca5a5;
-    }
-    pre {
-      font-size: 11px;
       background: #020617;
       border-radius: 10px;
-      border: 1px solid #111827;
-      padding: 8px;
-      overflow: auto;
-      max-height: 280px;
-      margin-top: 8px;
-    }
-    .footer-note {
-      font-size: 11px;
-      color: #9ca3af;
-      margin-top: 10px;
-      line-height: 1.6;
-    }
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      padding: 2px 8px;
-      border-radius: 999px;
       border: 1px solid #1f2937;
-      font-size: 11px;
-      color: #a5f3fc;
-      margin-right: 4px;
+      padding: 8px;
+      max-height: 150px;
+      overflow: auto;
+      white-space: pre-wrap;
+    }
+    .api-log {
+      margin-top: 24px;
+      padding: 14px 12px;
+      border-radius: 16px;
+      border: 1px solid #1f2937;
+      background: #020617;
+    }
+    .api-log h2 {
+      font-size: 15px;
+      margin: 0 0 6px;
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <h1>DogCamp Internal Instagram & Page Dashboard (Demo)</h1>
+  <div class="container">
+    <h1>DogCamp Hashtag & Permissions Demo</h1>
     <div class="subtitle">
-      Business: DogCamp Airport Branch – Internal tool for our own accounts only.<br />
-      This demo shows how we use:
-      <span class="badge">instagram_basic</span>
-      <span class="badge">pages_show_list</span>
-      <span class="badge">pages_read_engagement</span>
-      <span class="badge">Instagram Public Content Access</span>
+      Internal review demo for Meta permissions:
+      <code>instagram_basic</code>,
+      <code>pages_show_list</code>,
+      <code>pages_read_engagement</code>,
+      <code>Instagram Public Content Access</code>.<br />
+      Used only for our own business accounts and DogCamp event hashtags
+      (e.g. <code>#도그캠프공항점</code>, <code>#2023트리샷이벤트</code>,
+      <code>#2024트리샷이벤트</code>, <code>#2025트리샷이벤트</code>).
     </div>
 
-    <!-- GLOBAL TOKEN / IDS -->
+    <!-- STEP 0: Token & IDs -->
     <div class="card">
-      <h2>Step 0 – Access token & IDs (review environment)</h2>
-      <p class="hint">
-        Paste here a test access token that has
-        <code>instagram_basic, pages_show_list, pages_read_engagement</code>
-        and Instagram Public Content Access for our Business assets.
-        In production, this would be a secure token (for example from a system user or
-        business admin) used only by DogCamp staff.
+      <div class="section-title">Step 0 – Access token & IDs (review environment)</div>
+      <p>
+        For this review, please paste a <strong>user access token</strong> that has:
+        <code>instagram_basic</code>, <code>pages_show_list</code>,
+        <code>pages_read_engagement</code>, and
+        <code>Instagram Public Content Access</code>
+        for our DogCamp assets.
+      </p>
+      <p class="small">
+        In our real internal environment, tokens are handled on the server side,
+        are never shown to customers, and are used only by DogCamp staff
+        for our own Business accounts.
       </p>
 
-      <label for="token">Access token (test only)</label>
-      <textarea id="token" placeholder="Paste your test access token here"></textarea>
+      <label for="access-token">User access token (for review)</label>
+      <input id="access-token" type="text" placeholder="Paste Graph API Explorer token here" />
 
-      <label for="igUserId">Instagram Business Account ID (ig_user_id)</label>
-      <input id="igUserId" type="text" value="17841451651429958" />
+      <label for="ig-user-id">Instagram Business Account ID (ig_user_id)</label>
+      <input id="ig-user-id" type="text" value="17841451651429958" />
 
-      <label for="pageId">Facebook Page ID (DogCamp Airport Branch)</label>
-      <input id="pageId" type="text" placeholder="Enter your DogCamp Page ID" />
-
-      <div class="hint">
-        For the reviewer: you can use a test user that is admin of our Facebook Page
-        and the connected Instagram Business account <strong>@dogcamp.gochon</strong>,
-        then generate a token with the required permissions and paste it here.
-      </div>
+      <label for="page-id">Facebook Page ID (DogCamp)</label>
+      <input id="page-id" type="text" value="100541009374926" />
     </div>
 
-    <!-- GRID LAYOUT FOR FEATURE CARDS -->
-    <div class="grid grid-2" style="margin-top: 20px;">
-      <!-- INSTAGRAM BASIC -->
+    <div class="grid" style="margin-top: 18px;">
+      <!-- instagram_basic -->
       <div class="card">
-        <h2>1. instagram_basic – Our own Instagram Business account</h2>
-        <p class="hint">
-          This section demonstrates <code>instagram_basic</code> by reading only
-          <code>id</code>, <code>username</code>, and <code>media_count</code>
-          for our own Business account <strong>@dogcamp.gochon</strong>.
+        <div class="section-title">1. instagram_basic</div>
+        <h2>Our own Instagram Business account</h2>
+        <p>
+          This section uses <code>instagram_basic</code> to call:
+          <code>/{ig-user-id}?fields=id,username,media_count</code>
+          and show only our own Business account data.
         </p>
 
-        <button id="btnLoadIgInfo">
-          1-1. Load IG Business info
-          <span class="pill">instagram_basic</span>
+        <button class="btn" id="btn-ig-basic">
+          Load IG Business info
         </button>
-        <div id="igStatus" class="status"></div>
-        <table id="igTable" style="display:none;">
-          <thead>
-            <tr>
-              <th>Field</th>
-              <th>Value</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
 
-        <div class="footer-note">
-          We use this only so DogCamp staff can confirm which Business account
-          is connected. No customer data, DMs, or private fields are accessed.
+        <div id="ig-basic-result" class="result-box">
+          Result will appear here.
         </div>
       </div>
 
-      <!-- PAGES_SHOW_LIST -->
+      <!-- pages_show_list -->
       <div class="card">
-        <h2>2. pages_show_list – List our Facebook Pages</h2>
-        <p class="hint">
-          This section demonstrates <code>pages_show_list</code> by listing
-          Facebook Pages that the token has access to. We only use this to locate
-          our own DogCamp Page and link it to this internal dashboard.
+        <div class="section-title">2. pages_show_list</div>
+        <h2>List our Facebook Pages</h2>
+        <p>
+          This section uses <code>pages_show_list</code> to call:
+          <code>/me/accounts?fields=id,name</code>.
+        </p>
+        <p class="small">
+          We only use this list to confirm and select our own Page
+          <strong>도그캠프 공항점</strong>, not pages of other businesses.
         </p>
 
-        <button id="btnLoadPages">
-          2-1. List my Facebook Pages
-          <span class="pill">pages_show_list</span>
+        <button class="btn" id="btn-pages-list">
+          List my Facebook Pages
         </button>
-        <div id="pagesStatus" class="status"></div>
-        <table id="pagesTable" style="display:none;">
-          <thead>
-            <tr>
-              <th>Page ID</th>
-              <th>Page name</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
 
-        <div class="hint">
-          Reviewer tip: After loading, you can copy the DogCamp Page ID from the
-          table and paste it into the "Facebook Page ID" field in Step 0.
-        </div>
-        <div class="footer-note">
-          We do not use this permission to access or manage Pages for other
-          businesses. It is only used to find and confirm our own DogCamp Page.
-        </div>
-      </div>
-    </div>
-
-    <div class="grid grid-2" style="margin-top: 18px;">
-      <!-- PAGES_READ_ENGAGEMENT -->
-      <div class="card">
-        <h2>3. pages_read_engagement – Basic engagement for our own Page</h2>
-        <p class="hint">
-          This section demonstrates <code>pages_read_engagement</code> by reading
-          simple engagement metrics for a few recent posts on our DogCamp Page.
-          We only use this internally to understand which event posts perform well.
-        </p>
-
-        <button id="btnLoadEngagement">
-          3-1. Load Page posts + engagement
-          <span class="pill">pages_read_engagement</span>
-        </button>
-        <div id="engStatus" class="status"></div>
-        <table id="engTable" style="display:none;">
-          <thead>
-            <tr>
-              <th>Created</th>
-              <th>Message</th>
-              <th>Link</th>
-              <th>Impressions</th>
-              <th>Engaged users</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-
-        <div class="footer-note">
-          We do not sell or share these metrics with third parties, and we do not
-          use them for ad targeting or external analytics. They are only for
-          internal DogCamp planning.
+        <div id="pages-list-result" class="result-box">
+          Result will appear here.
         </div>
       </div>
 
-      <!-- PUBLIC CONTENT ACCESS (HASHTAG SEARCH) -->
+      <!-- pages_read_engagement -->
       <div class="card">
-        <h2>4. Instagram Public Content Access – Event hashtag posts</h2>
-        <p class="hint">
-          This section demonstrates Instagram Public Content Access by using the
-          Hashtag Search API to find public posts that contain our own brand or
-          event hashtags, such as:
+        <div class="section-title">3. pages_read_engagement</div>
+        <h2>Basic engagement for our Page</h2>
+        <p>
+          This section uses <code>pages_read_engagement</code> to call:
+          <code>/{page-id}/posts?fields=id,message,created_time,permalink_url,insights.metric(post_impressions,post_engaged_users).period(lifetime)</code>.
         </p>
-        <div>
-          <span class="tagpill">#도그캠프공항점</span>
-          <span class="tagpill">#2023트리샷이벤트</span>
-          <span class="tagpill">#2024트리샷이벤트</span>
-          <span class="tagpill">#2025트리샷이벤트</span>
-        </div>
+        <p class="small">
+          We use this only to see impressions and engaged users for our own
+          DogCamp Page posts, so we can improve our event and announcement posts.
+        </p>
 
-        <label for="hashtagInput">Event hashtag (without #)</label>
-        <input id="hashtagInput" type="text" placeholder="예: 2025트리샷이벤트" />
+        <label for="page-id-eng">Page ID for engagement</label>
+        <input id="page-id-eng" type="text" value="100541009374926" />
 
-        <button id="btnSearchHashtag">
-          4-1. Search hashtag posts (recent_media)
-          <span class="pill">Public Content Access</span>
+        <button class="btn" id="btn-pages-engagement">
+          Load Page posts + engagement
         </button>
-        <div id="hashStatus" class="status"></div>
-        <table id="hashTable" style="display:none;">
-          <thead>
-            <tr>
-              <th>Timestamp</th>
-              <th>Caption snippet</th>
-              <th>Media type</th>
-              <th>Post link</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
 
-        <div class="footer-note">
-          DogCamp staff use this list only to confirm event participation and to
-          select some customer posts to re-share on our official Instagram Stories
-          with proper credit. We do not use it as a resale, ad, or generic brand
-          analytics tool.
+        <div id="pages-engagement-result" class="result-box">
+          Result will appear here.
+        </div>
+      </div>
+
+      <!-- Instagram Public Content Access (hashtag) -->
+      <div class="card">
+        <div class="section-title">4. Instagram Public Content Access</div>
+        <h2>Event hashtag posts (recent_media)</h2>
+        <p>
+          This section uses <strong>Instagram Public Content Access</strong> to:
+        </p>
+        <ul class="small">
+          <li>Call <code>ig_hashtag_search?user_id={ig-user-id}&amp;q={event-hashtag}</code> to get the hashtag ID.</li>
+          <li>Then call <code>/{hashtag-id}/recent_media?user_id={ig-user-id}&amp;fields=id,caption,media_type,media_url,permalink,timestamp</code>.</li>
+        </ul>
+        <p class="small">
+          We only search our own brand/event hashtags, such as
+          <code>도그캠프공항점</code>, <code>2023트리샷이벤트</code>,
+          <code>2024트리샷이벤트</code>, <code>2025트리샷이벤트</code>.
+          This is used only to confirm which customers joined in-store events and
+          to manually re-share some posts on <strong>@dogcamp.gochon</strong>
+          with proper credit.
+        </p>
+
+        <label for="hashtag-input">Event hashtag (without #)</label>
+        <input id="hashtag-input" type="text" placeholder="예: 2025트리샷이벤트" />
+
+        <button class="btn" id="btn-hashtag-search">
+          Search hashtag posts (recent_media)
+        </button>
+
+        <div id="hashtag-result" class="result-box">
+          Result will appear here.
         </div>
       </div>
     </div>
 
-    <!-- DEBUG / RAW LOG -->
-    <div class="card" style="margin-top: 18px;">
-      <h2>5. API log (for review only)</h2>
-      <p class="hint">
-        This panel prints the exact Graph API URLs we call and a trimmed JSON
-        response, so reviewers can see how each permission is used.
+    <!-- API log -->
+    <div class="api-log">
+      <h2>API log (requests &amp; responses)</h2>
+      <p class="small">
+        For review, this log shows the exact Graph API URLs and JSON responses
+        used by each section above.
       </p>
-      <pre id="logArea">No requests yet.</pre>
+      <textarea id="api-log" readonly>
+API log will appear here.
+      </textarea>
     </div>
   </div>
 
   <script>
-    const GRAPH_API_VERSION = "v24.0";
+    const GRAPH_VERSION = "v24.0";
 
-    function log(message, data) {
-      const area = document.getElementById("logArea");
-      let text = `[${new Date().toISOString()}]\n${message}`;
-      if (data) {
-        try {
-          text += "\n" + JSON.stringify(data, null, 2);
-        } catch (e) {
-          text += "\n" + String(data);
-        }
-      }
-      text += "\n\n";
-      area.textContent = text + area.textContent;
-    }
-
-    function getTokenOrWarn() {
-      const token = document.getElementById("token").value.trim();
+    function getToken() {
+      const token = document.getElementById("access-token").value.trim();
       if (!token) {
-        alert("Please paste a test access token in Step 0 first.");
+        alert("Please paste a user access token in Step 0.");
         return null;
       }
       return token;
     }
 
-    async function callGraph(url, statusElId) {
-      const statusEl = document.getElementById(statusElId);
-      statusEl.classList.remove("error");
-      statusEl.textContent = "Calling: " + url;
+    function log(message) {
+      const logEl = document.getElementById("api-log");
+      const time = new Date().toISOString();
+      const prev = logEl.value.trim() === "API log will appear here." ? "" : logEl.value + "\n";
+      logEl.value = prev + "[" + time + "] " + message;
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    async function fetchWithLog(url, options = {}) {
+      log("REQUEST: " + url);
       try {
-        const res = await fetch(url);
-        const json = await res.json();
-        log(url, json);
-        if (!res.ok || json.error) {
-          statusEl.classList.add("error");
-          statusEl.textContent = "Error: " + (json.error && json.error.message ? json.error.message : "Unknown error");
-          return null;
+        const res = await fetch(url, options);
+        const text = await res.text();
+        log("RESPONSE (" + res.status + "): " + text);
+        let json;
+        try {
+          json = JSON.parse(text);
+        } catch {
+          json = { raw: text };
         }
-        statusEl.textContent = "OK";
         return json;
-      } catch (e) {
-        statusEl.classList.add("error");
-        statusEl.textContent = "Network error: " + e.message;
-        log("Network error for " + url, e);
-        return null;
+      } catch (err) {
+        log("ERROR: " + err.message);
+        throw err;
       }
     }
 
-    // 1. instagram_basic – IG account info
-    document.getElementById("btnLoadIgInfo").addEventListener("click", async () => {
-      const token = getTokenOrWarn();
+    // 1) instagram_basic
+    document.getElementById("btn-ig-basic").addEventListener("click", async () => {
+      const token = getToken();
       if (!token) return;
-      const igUserId = document.getElementById("igUserId").value.trim();
+
+      const igUserId = document.getElementById("ig-user-id").value.trim();
       if (!igUserId) {
         alert("Please enter ig_user_id in Step 0.");
         return;
       }
-      const url = `https://graph.facebook.com/${GRAPH_API_VERSION}/${igUserId}?fields=id,username,media_count&access_token=${encodeURIComponent(token)}`;
-      const json = await callGraph(url, "igStatus");
-      if (!json) return;
 
-      const table = document.getElementById("igTable");
-      const tbody = table.querySelector("tbody");
-      tbody.innerHTML = "";
-      const rows = [
-        ["id", json.id],
-        ["username", json.username],
-        ["media_count", json.media_count]
-      ];
-      rows.forEach(([k, v]) => {
-        const tr = document.createElement("tr");
-        const td1 = document.createElement("td");
-        const td2 = document.createElement("td");
-        td1.textContent = k;
-        td2.textContent = v;
-        tr.appendChild(td1);
-        tr.appendChild(td2);
-        tbody.appendChild(tr);
-      });
-      table.style.display = "";
-    });
-
-    // 2. pages_show_list – list Pages
-    document.getElementById("btnLoadPages").addEventListener("click", async () => {
-      const token = getTokenOrWarn();
-      if (!token) return;
-      const url = `https://graph.facebook.com/${GRAPH_API_VERSION}/me/accounts?fields=id,name&access_token=${encodeURIComponent(token)}`;
-      const json = await callGraph(url, "pagesStatus");
-      if (!json) return;
-
-      const table = document.getElementById("pagesTable");
-      const tbody = table.querySelector("tbody");
-      tbody.innerHTML = "";
-
-      if (!json.data || !json.data.length) {
-        document.getElementById("pagesStatus").textContent = "OK – No Pages returned for this token.";
-        table.style.display = "none";
-        return;
+      const url = `https://graph.facebook.com/${GRAPH_VERSION}/${igUserId}?fields=id,username,media_count&access_token=${encodeURIComponent(token)}`;
+      const resultBox = document.getElementById("ig-basic-result");
+      resultBox.textContent = "Loading...";
+      try {
+        const data = await fetchWithLog(url);
+        resultBox.textContent = JSON.stringify(data, null, 2);
+      } catch (e) {
+        resultBox.textContent = "Error. See API log below.";
       }
-
-      json.data.forEach(page => {
-        const tr = document.createElement("tr");
-        const td1 = document.createElement("td");
-        const td2 = document.createElement("td");
-        td1.textContent = page.id;
-        td2.textContent = page.name;
-        tr.appendChild(td1);
-        tr.appendChild(td2);
-        tbody.appendChild(tr);
-      });
-      table.style.display = "";
     });
 
-    // 3. pages_read_engagement – basic engagement metrics
-    document.getElementById("btnLoadEngagement").addEventListener("click", async () => {
-      const token = getTokenOrWarn();
+    // 2) pages_show_list
+    document.getElementById("btn-pages-list").addEventListener("click", async () => {
+      const token = getToken();
       if (!token) return;
-      const pageId = document.getElementById("pageId").value.trim();
+
+      const url = `https://graph.facebook.com/${GRAPH_VERSION}/me/accounts?fields=id,name&access_token=${encodeURIComponent(token)}`;
+      const resultBox = document.getElementById("pages-list-result");
+      resultBox.textContent = "Loading...";
+      try {
+        const data = await fetchWithLog(url);
+        resultBox.textContent = JSON.stringify(data, null, 2);
+      } catch (e) {
+        resultBox.textContent = "Error. See API log below.";
+      }
+    });
+
+    // 3) pages_read_engagement
+    document.getElementById("btn-pages-engagement").addEventListener("click", async () => {
+      const token = getToken();
+      if (!token) return;
+
+      const pageId = document.getElementById("page-id-eng").value.trim();
       if (!pageId) {
-        alert("Please enter your DogCamp Facebook Page ID in Step 0.");
+        alert("Please enter the Page ID for engagement.");
         return;
       }
 
-      // We fetch recent posts and their basic lifetime metrics
-      const fields =
-        "id,message,created_time,permalink_url," +
-        "insights.metric(post_impressions,post_engaged_users).period(lifetime)";
-      const url = `https://graph.facebook.com/${GRAPH_API_VERSION}/${pageId}/posts?fields=${encodeURIComponent(fields)}&limit=5&access_token=${encodeURIComponent(token)}`;
-
-      const json = await callGraph(url, "engStatus");
-      if (!json) return;
-
-      const table = document.getElementById("engTable");
-      const tbody = table.querySelector("tbody");
-      tbody.innerHTML = "";
-
-      if (!json.data || !json.data.length) {
-        document.getElementById("engStatus").textContent = "OK – No posts returned for this Page.";
-        table.style.display = "none";
-        return;
+      const url = `https://graph.facebook.com/${GRAPH_VERSION}/${pageId}/posts?fields=id,message,created_time,permalink_url,insights.metric(post_impressions,post_engaged_users).period(lifetime)&limit=5&access_token=${encodeURIComponent(token)}`;
+      const resultBox = document.getElementById("pages-engagement-result");
+      resultBox.textContent = "Loading...";
+      try {
+        const data = await fetchWithLog(url);
+        resultBox.textContent = JSON.stringify(data, null, 2);
+      } catch (e) {
+        resultBox.textContent = "Error. See API log below.";
       }
-
-      json.data.forEach(post => {
-        const tr = document.createElement("tr");
-
-        const created = document.createElement("td");
-        created.textContent = post.created_time || "";
-
-        const msg = document.createElement("td");
-        const msgText = (post.message || "").substring(0, 80);
-        msg.textContent = msgText;
-
-        const link = document.createElement("td");
-        if (post.permalink_url) {
-          const a = document.createElement("a");
-          a.href = post.permalink_url;
-          a.target = "_blank";
-          a.rel = "noopener noreferrer";
-          a.textContent = "Open post";
-          link.appendChild(a);
-        } else {
-          link.textContent = "-";
-        }
-
-        // Extract impressions / engaged users from insights array
-        let impressions = "";
-        let engaged = "";
-        if (Array.isArray(post.insights && post.insights.data)) {
-          post.insights.data.forEach(m => {
-            if (m.name === "post_impressions" && m.values && m.values[0]) {
-              impressions = m.values[0].value;
-            }
-            if (m.name === "post_engaged_users" && m.values && m.values[0]) {
-              engaged = m.values[0].value;
-            }
-          });
-        }
-
-        const impTd = document.createElement("td");
-        impTd.textContent = impressions;
-
-        const engTd = document.createElement("td");
-        engTd.textContent = engaged;
-
-        tr.appendChild(created);
-        tr.appendChild(msg);
-        tr.appendChild(link);
-        tr.appendChild(impTd);
-        tr.appendChild(engTd);
-        tbody.appendChild(tr);
-      });
-
-      table.style.display = "";
     });
 
-    // 4. Public Content Access – hashtag search
-    document.getElementById("btnSearchHashtag").addEventListener("click", async () => {
-      const token = getTokenOrWarn();
+    // 4) Instagram Public Content Access – hashtag search
+    document.getElementById("btn-hashtag-search").addEventListener("click", async () => {
+      const token = getToken();
       if (!token) return;
-      const igUserId = document.getElementById("igUserId").value.trim();
+
+      const igUserId = document.getElementById("ig-user-id").value.trim();
+      const hashtag = document.getElementById("hashtag-input").value.trim();
+      const resultBox = document.getElementById("hashtag-result");
+
       if (!igUserId) {
         alert("Please enter ig_user_id in Step 0.");
         return;
       }
-      const hashtagName = document.getElementById("hashtagInput").value.trim();
-      if (!hashtagName) {
-        alert("Please enter a hashtag name (without #).");
+      if (!hashtag) {
+        alert("Please enter an event hashtag (without #).");
         return;
       }
 
-      // Step 1: ig_hashtag_search
-      const searchUrl =
-        `https://graph.facebook.com/${GRAPH_API_VERSION}/ig_hashtag_search` +
-        `?user_id=${encodeURIComponent(igUserId)}` +
-        `&q=${encodeURIComponent(hashtagName)}` +
-        `&access_token=${encodeURIComponent(token)}`;
-      const searchJson = await callGraph(searchUrl, "hashStatus");
-      if (!searchJson || !searchJson.data || !searchJson.data.length) {
-        const statusEl = document.getElementById("hashStatus");
-        statusEl.classList.add("error");
-        statusEl.textContent = "Error from ig_hashtag_search: no hashtag found for this name.";
-        document.getElementById("hashTable").style.display = "none";
-        return;
-      }
+      resultBox.textContent = "Searching hashtag ID...";
+      try {
+        // 1) ig_hashtag_search
+        const searchUrl = `https://graph.facebook.com/${GRAPH_VERSION}/ig_hashtag_search?user_id=${encodeURIComponent(igUserId)}&q=${encodeURIComponent(hashtag)}&access_token=${encodeURIComponent(token)}`;
+        const searchData = await fetchWithLog(searchUrl);
 
-      const hashtagId = searchJson.data[0].id;
-      document.getElementById("hashStatus").textContent =
-        `Found hashtag ID ${hashtagId}. Loading recent_media…`;
-
-      // Step 2: recent_media
-      const mediaUrl =
-        `https://graph.facebook.com/${GRAPH_API_VERSION}/${hashtagId}/recent_media` +
-        `?user_id=${encodeURIComponent(igUserId)}` +
-        `&fields=id,caption,media_type,media_url,permalink,timestamp` +
-        `&limit=10` +
-        `&access_token=${encodeURIComponent(token)}`;
-      const mediaJson = await callGraph(mediaUrl, "hashStatus");
-      if (!mediaJson) return;
-
-      const table = document.getElementById("hashTable");
-      const tbody = table.querySelector("tbody");
-      tbody.innerHTML = "";
-
-      if (!mediaJson.data || !mediaJson.data.length) {
-        document.getElementById("hashStatus").textContent =
-          "OK – No recent public posts returned for this hashtag.";
-        table.style.display = "none";
-        return;
-      }
-
-      mediaJson.data.forEach(item => {
-        const tr = document.createElement("tr");
-
-        const tsTd = document.createElement("td");
-        tsTd.textContent = item.timestamp || "";
-
-        const capTd = document.createElement("td");
-        const cap = (item.caption || "").replace(/\s+/g, " ");
-        capTd.textContent = cap.substring(0, 80);
-
-        const typeTd = document.createElement("td");
-        typeTd.textContent = item.media_type || "";
-
-        const linkTd = document.createElement("td");
-        if (item.permalink) {
-          const a = document.createElement("a");
-          a.href = item.permalink;
-          a.target = "_blank";
-          a.rel = "noopener noreferrer";
-          a.textContent = "Open post";
-          linkTd.appendChild(a);
-        } else {
-          linkTd.textContent = "-";
+        if (!searchData.data || !searchData.data.length) {
+          resultBox.textContent = "No hashtag ID found for this query.";
+          return;
         }
 
-        tr.appendChild(tsTd);
-        tr.appendChild(capTd);
-        tr.appendChild(typeTd);
-        tr.appendChild(linkTd);
-        tbody.appendChild(tr);
-      });
+        const hashtagId = searchData.data[0].id;
+        resultBox.textContent = "Found hashtag ID: " + hashtagId + "\nLoading recent_media...";
 
-      table.style.display = "";
-      document.getElementById("hashStatus").textContent =
-        `OK – Loaded ${mediaJson.data.length} recent public posts for hashtag "${hashtagName}".`;
+        // 2) recent_media
+        const mediaUrl = `https://graph.facebook.com/${GRAPH_VERSION}/${hashtagId}/recent_media?user_id=${encodeURIComponent(igUserId)}&fields=id,caption,media_type,media_url,permalink,timestamp&limit=10&access_token=${encodeURIComponent(token)}`;
+        const mediaData = await fetchWithLog(mediaUrl);
+        resultBox.textContent = JSON.stringify(mediaData, null, 2);
+      } catch (e) {
+        resultBox.textContent = "Error. See API log below.";
+      }
     });
   </script>
 </body>
