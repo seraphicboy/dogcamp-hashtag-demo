@@ -5,10 +5,11 @@
   <title>DogCamp Hashtag & Page Insights Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Open Graph / Meta tags -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="DogCamp Hashtag & Page Insights Demo" />
   <meta property="og:description"
-        content="Internal demo for DogCamp Airport Branch to test instagram_basic, Instagram Public Content Access, pages_show_list, and pages_read_engagement." />
+        content="Internal demo for DogCamp Airport Branch to test instagram_basic, Instagram Public Content Access, pages_show_list, and pages_read_engagement for our own business assets." />
   <meta property="og:url" content="https://seraphicboy.github.io/dogcamp-hashtag-demo/hashtag-demo.html" />
   <meta property="fb:app_id" content="1668676324517166" />
 
@@ -210,13 +211,22 @@
           <div class="card-title">Step 0–2 · Instagram Business & Hashtags</div>
         </div>
         <div class="card-sub">
-          In production, the access token here would be a secure system user or
-          business admin token, used only server-to-server by DogCamp staff.
-          For this review, you can paste a test token to reproduce the behavior.
+          This side shows how our internal app uses
+          <span class="mono">instagram_basic</span> and
+          <span class="mono">Instagram Public Content Access</span>.
+          We only work with our own Instagram Business account
+          <strong>@dogcamp.gochon</strong> and our own brand/event hashtags
+          such as <span class="mono">도그캠프공항점</span>,
+          <span class="mono">2023트리샷이벤트</span>,
+          <span class="mono">2024트리샷이벤트</span> and
+          <span class="mono">2025트리샷이벤트</span>.
+          The purpose is to confirm event participation and optionally re-share
+          some customer posts to our Stories, not to provide analytics for other
+          businesses or to resell data.
         </div>
 
         <label for="access-token">Access Token (test environment)</label>
-        <textarea id="access-token" placeholder="Paste a test access token that has instagram_basic and Instagram Public Content Access…"></textarea>
+        <textarea id="access-token" placeholder="Paste a test access token that has instagram_basic, Instagram Public Content Access, pages_show_list and pages_read_engagement…"></textarea>
 
         <label for="ig-user-id">Instagram Business Account ID (ig_user_id)</label>
         <input id="ig-user-id" value="17841451651429958" />
@@ -247,9 +257,10 @@
         <div id="hashtag-output" class="status"></div>
 
         <div class="small-note">
-          We only use these hashtag results internally to confirm event
-          participation (e.g. “트리샷이벤트”) and optionally re-share some posts
-          to our Stories on @dogcamp.gochon with proper credit.
+          In production, access tokens for our own Business assets are handled
+          securely and used only server-to-server. For this review, we paste
+          a test token here so you can see the full end-to-end behavior of
+          Instagram Public Content Access with our own hashtags.
         </div>
       </div>
 
@@ -260,9 +271,12 @@
           <div class="card-title">Step 3–4 · Page List & Engagement</div>
         </div>
         <div class="card-sub">
-          This section demonstrates how we use <span class="mono">pages_show_list</span>
-          and <span class="mono">pages_read_engagement</span> only for our own Page,
-          e.g. the test Page <strong>“dogcamp gochon test”</strong>.
+          This side demonstrates how we use
+          <span class="mono">pages_show_list</span> and
+          <span class="mono">pages_read_engagement</span> only for our own
+          Facebook Page (for example, the test Page
+          <strong>“dogcamp gochon test”</strong>). We do not analyze or expose
+          engagement for other businesses.
         </div>
 
         <label for="page-id">Facebook Page ID</label>
@@ -296,10 +310,9 @@
         <div id="engagement-output" class="status"></div>
 
         <div class="small-note">
-          We only read engagement for our own Page posts (for example,
-          “dogcamp gochon test”) and display them to DogCamp staff in this
-          internal dashboard. We do not analyze other businesses or share
-          this data with third parties.
+          We only read engagement for our own Page posts and display them in this
+          internal dashboard. We do not sell, share, or use this data for ads or
+          third-party analytics.
         </div>
       </div>
     </div>
@@ -359,7 +372,7 @@
         });
     }
 
-    // Step 2: Hashtag Search – Public Content Access
+    // Step 2: Hashtag Search – Instagram Public Content Access
     async function searchHashtag() {
       const token = getToken();
       const igUserId = (document.getElementById("ig-user-id").value || "").trim();
@@ -431,7 +444,6 @@
           return;
         }
 
-        // Render as simple list
         let html = "";
         html += "Hashtag ID: " + hashtagId + "\n";
         html += "Showing up to 10 public posts:\n\n";
@@ -496,7 +508,7 @@
 
           outEl.textContent = html;
 
-          // 첫 번째 페이지 ID를 자동으로 입력
+          // Set first page ID automatically
           if (pages[0].id) {
             document.getElementById("page-id").value = pages[0].id;
           }
@@ -571,7 +583,6 @@
           return;
         }
 
-        // Render table
         let html = "";
         html += "<div style='font-size:12px; margin-bottom:6px;'>Page: <strong>" +
           pageName + "</strong> (ID: " + pageId + ")</div>";
